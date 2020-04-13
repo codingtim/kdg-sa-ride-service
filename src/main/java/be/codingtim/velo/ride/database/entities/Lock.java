@@ -16,10 +16,20 @@ public class Lock {
     )
     private int lockId;
     @Column(
+            columnDefinition = "SMALLINT",
+            name = "StationId"
+    )
+    private int stationId;
+    @Column(
             columnDefinition = "TINYINT",
             name = "StationLockNr"
     )
     private int stationLockId;
+    @Column(
+            columnDefinition = "SMALLINT",
+            name = "VehicleId"
+    )
+    private int vehicleId;
 
     Lock() {
         //default constructor
@@ -31,5 +41,13 @@ public class Lock {
 
     public int getStationLockId() {
         return stationLockId;
+    }
+
+    public int getStationId() {
+        return stationId;
+    }
+
+    public int getVehicleId() {
+        return vehicleId;
     }
 }

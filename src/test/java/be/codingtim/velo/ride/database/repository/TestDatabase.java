@@ -39,7 +39,9 @@ public class TestDatabase {
                     .getResultList();
             assertEquals(resultList.size(), 1);
             assertEquals(resultList.get(0).getLockId(), 1);
+            assertEquals(resultList.get(0).getStationId(), 1);
             assertEquals(resultList.get(0).getStationLockId(), 1);
+            assertEquals(resultList.get(0).getVehicleId(), 1856);
         }
     }
 
