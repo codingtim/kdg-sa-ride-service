@@ -1,8 +1,6 @@
 package be.codingtim.velo.ride.domain.station;
 
 import be.codingtim.velo.ride.database.configuration.DatabaseConfiguration;
-import be.codingtim.velo.ride.database.repository.TestDatabase;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +13,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = StationRepositoryHibernateTest.TestConfiguration.class)
