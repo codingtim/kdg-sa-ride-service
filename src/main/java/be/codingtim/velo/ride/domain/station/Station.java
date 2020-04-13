@@ -28,8 +28,7 @@ public class Station {
         return stationId;
     }
 
-    //TODO restrict access
-    public List<Lock> getLocks() {
+    List<Lock> getLocks() {
         return locks;
     }
 }

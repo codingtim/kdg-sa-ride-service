@@ -2,15 +2,19 @@ package be.codingtim.velo.ride.database.configuration;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableTransactionManagement
 public class DatabaseConfiguration {
 
     @Bean
@@ -36,7 +40,10 @@ public class DatabaseConfiguration {
         return localSessionFactoryBean;
     }
 
-    //TODO transaction management
+    @Bean
+    public HibernateTransactionManager hibernateTransactionManager(SessionFactory sessionFactory) {
+        return new HibernateTransactionManager(sessionFactory);
+    }
 
     //TODO exception translation
     //https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#orm-exception-translation

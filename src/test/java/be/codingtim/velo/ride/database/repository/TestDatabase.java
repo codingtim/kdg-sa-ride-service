@@ -32,7 +32,7 @@ public class TestDatabase {
     void getLock() {
         try (Session session = sessionFactory.openSession()) {
             List<Lock> resultList = session
-                    .createQuery("from Lock where id = 1", Lock.class)
+                    .createQuery("from Lock where lockId = 1", Lock.class)
                     .getResultList();
             assertEquals(resultList.size(), 1);
             assertEquals(resultList.get(0).getLockId(), 1);
@@ -45,7 +45,7 @@ public class TestDatabase {
     void getStation() {
         try (Session session = sessionFactory.openSession()) {
             Station station = session
-                    .createQuery("from Station where id = 1", Station.class)
+                    .createQuery("from Station where stationId = 1", Station.class)
                     .getSingleResult();
             assertNotNull(station);
         }
