@@ -1,7 +1,6 @@
 package be.codingtim.velo.ride.domain.station;
 
 import be.codingtim.velo.ride.database.configuration.DatabaseConfiguration;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +20,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class StationRepositoryHibernateTest {
 
     @Autowired
-    private SessionFactory sessionFactory;
-
-    @Autowired
     private StationRepository stationRepository;
 
     @Test
     void getStation() {
         Station station = stationRepository.findById(1);
         assertNotNull(station);
+        assertEquals(station.getStationId(), new StationId(1));
         List<Lock> locks = station.getLocks();
         assertEquals(locks.size(), 18);
+        assertEquals(locks.get(0).getLockId(), new LockId(1));
     }
 
     @Configuration

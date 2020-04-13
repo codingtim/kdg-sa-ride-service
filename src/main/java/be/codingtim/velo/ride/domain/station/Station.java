@@ -24,8 +24,8 @@ public class Station {
         //default constructor
     }
 
-    public int getStationId() {
-        return stationId;
+    public StationId getStationId() {
+        return new StationId(stationId);
     }
 
     List<Lock> getLocks() {
