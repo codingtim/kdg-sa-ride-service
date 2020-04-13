@@ -24,11 +24,20 @@ public class Station {
         //default constructor
     }
 
-    public StationId getStationId() {
+    StationId getStationId() {
         return new StationId(stationId);
     }
 
     List<Lock> getLocks() {
         return locks;
     }
+
+    public LockWithAvailableVehicle getAvailableVehicle() {
+        Lock lockWithVehicleAvailable = locks.stream()
+                .filter(Lock::hasVehicle)
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+        return lockWithVehicleAvailable.removeVehicle();
+    }
+
 }

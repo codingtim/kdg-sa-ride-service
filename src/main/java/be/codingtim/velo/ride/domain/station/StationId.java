@@ -1,6 +1,5 @@
 package be.codingtim.velo.ride.domain.station;
 
-import javax.persistence.Embeddable;
 import java.util.Objects;
 
 public class StationId {
@@ -9,10 +8,6 @@ public class StationId {
 
     StationId(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     @Override

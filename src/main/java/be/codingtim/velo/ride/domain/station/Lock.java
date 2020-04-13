@@ -1,10 +1,13 @@
 package be.codingtim.velo.ride.domain.station;
 
 
+import be.codingtim.velo.ride.domain.vehicle.VehicleId;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Optional;
 
 @Entity
 @Table(name = "Locks")
@@ -36,15 +39,17 @@ public class Lock {
         //default constructor
     }
 
-    public LockId getLockId() {
+    LockId getLockId() {
         return new LockId(lockId);
     }
 
-    public int getStationLockId() {
-        return stationLockId;
+    boolean hasVehicle() {
+        return vehicleId != null;
     }
 
-    public Integer getVehicleId() {
-        return vehicleId;
+    LockWithAvailableVehicle removeVehicle() {
+        LockWithAvailableVehicle lockWithAvailableVehicle = new LockWithAvailableVehicle(lockId, vehicleId);
+        vehicleId = null;
+        return lockWithAvailableVehicle;
     }
 }
