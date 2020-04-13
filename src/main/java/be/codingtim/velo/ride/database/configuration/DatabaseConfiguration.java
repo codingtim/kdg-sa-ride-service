@@ -27,7 +27,7 @@ public class DatabaseConfiguration {
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         Properties hibernateProperties = new Properties();
         hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");
-        //TODO  hibernate.hbm2ddl.auto
+        hibernateProperties.put("hibernate.hbm2ddl.auto", "validate");
         localSessionFactoryBean.setHibernateProperties(hibernateProperties);
         localSessionFactoryBean.setDataSource(dataSource);
         localSessionFactoryBean.setPackagesToScan("be.codingtim.velo.ride.database.entities");

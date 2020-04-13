@@ -10,20 +10,26 @@ import javax.persistence.Table;
 public class Lock {
 
     @Id
-    @Column(name = "LockId")
-    private String lockId;
-    @Column(name = "StationLockNr")
-    private String stationLockId;
+    @Column(
+            columnDefinition = "SMALLINT",
+            name = "LockId"
+    )
+    private int lockId;
+    @Column(
+            columnDefinition = "TINYINT",
+            name = "StationLockNr"
+    )
+    private int stationLockId;
 
     Lock() {
         //default constructor
     }
 
-    public String getLockId() {
+    public int getLockId() {
         return lockId;
     }
 
-    public String getStationLockId() {
+    public int getStationLockId() {
         return stationLockId;
     }
 }

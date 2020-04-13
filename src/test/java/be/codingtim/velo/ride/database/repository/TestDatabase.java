@@ -38,8 +38,8 @@ public class TestDatabase {
                     .createQuery("from Lock where id = 1", Lock.class)
                     .getResultList();
             assertEquals(resultList.size(), 1);
-            assertEquals(resultList.get(0).getLockId(), "1");
-            assertEquals(resultList.get(0).getStationLockId(), "1");
+            assertEquals(resultList.get(0).getLockId(), 1);
+            assertEquals(resultList.get(0).getStationLockId(), 1);
         }
     }
 
