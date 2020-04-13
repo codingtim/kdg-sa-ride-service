@@ -1,4 +1,4 @@
-package be.codingtim.velo.ride.database.entities;
+package be.codingtim.velo.ride.domain.station;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

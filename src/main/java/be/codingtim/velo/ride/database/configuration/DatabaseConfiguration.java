@@ -30,7 +30,9 @@ public class DatabaseConfiguration {
         hibernateProperties.put("hibernate.hbm2ddl.auto", "validate");
         localSessionFactoryBean.setHibernateProperties(hibernateProperties);
         localSessionFactoryBean.setDataSource(dataSource);
-        localSessionFactoryBean.setPackagesToScan("be.codingtim.velo.ride.database.entities");
+        localSessionFactoryBean.setPackagesToScan(
+                "be.codingtim.velo.ride.domain.station"
+        );
         return localSessionFactoryBean;
     }
 
