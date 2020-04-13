@@ -2,6 +2,7 @@ package be.codingtim.velo.ride.database.repository;
 
 import be.codingtim.velo.ride.database.configuration.DatabaseConfiguration;
 import be.codingtim.velo.ride.domain.station.Lock;
+import be.codingtim.velo.ride.domain.station.Station;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ public class TestDatabase {
     private SessionFactory sessionFactory;
 
     @Test
-    void getWithMapping() {
+    void getLock() {
         try (Session session = sessionFactory.openSession()) {
             List<Lock> resultList = session
                     .createQuery("from Lock where id = 1", Lock.class)
@@ -38,6 +39,15 @@ public class TestDatabase {
             assertEquals(resultList.get(0).getStationId(), 1);
             assertEquals(resultList.get(0).getStationLockId(), 1);
             assertEquals(resultList.get(0).getVehicleId(), 1856);
+        }
+    }
+    @Test
+    void getStation() {
+        try (Session session = sessionFactory.openSession()) {
+            Station station = session
+                    .createQuery("from Station where id = 1", Station.class)
+                    .getSingleResult();
+            assertNotNull(station);
         }
     }
 

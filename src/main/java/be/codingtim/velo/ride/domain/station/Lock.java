@@ -29,7 +29,7 @@ public class Lock {
             columnDefinition = "SMALLINT",
             name = "VehicleId"
     )
-    private int vehicleId;
+    private Integer vehicleId;
 
     Lock() {
         //default constructor
@@ -47,7 +47,7 @@ public class Lock {
         return stationId;
     }
 
-    public int getVehicleId() {
+    public Integer getVehicleId() {
         return vehicleId;
     }
 }
