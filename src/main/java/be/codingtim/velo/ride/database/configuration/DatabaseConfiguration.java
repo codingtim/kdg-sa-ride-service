@@ -35,7 +35,8 @@ public class DatabaseConfiguration {
         localSessionFactoryBean.setHibernateProperties(hibernateProperties);
         localSessionFactoryBean.setDataSource(dataSource);
         localSessionFactoryBean.setPackagesToScan(
-                "be.codingtim.velo.ride.domain.station"
+                "be.codingtim.velo.ride.domain.station",
+                "be.codingtim.velo.ride.domain.user"
         );
         return localSessionFactoryBean;
     }
