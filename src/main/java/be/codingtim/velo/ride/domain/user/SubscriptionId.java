@@ -1,12 +1,12 @@
-package be.codingtim.velo.ride.domain.station;
+package be.codingtim.velo.ride.domain.user;
 
 import java.util.Objects;
 
-public class LockId {
+public class SubscriptionId {
 
     private int value;
 
-    public LockId(int value) {
+    public SubscriptionId(int value) {
         this.value = value;
     }
 
@@ -18,7 +18,7 @@ public class LockId {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LockId stationId = (LockId) o;
+        SubscriptionId stationId = (SubscriptionId) o;
         return value == stationId.value;
     }
 

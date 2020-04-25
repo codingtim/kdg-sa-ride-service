@@ -28,6 +28,4 @@ public class User {
         return subscriptions;
     }
 
-    //https://docs.jboss.org/hibernate/orm/5.4/userguide/html_single/Hibernate_User_Guide.html#entity-inheritance-discriminator-formula
-    //private List Rides;
 }

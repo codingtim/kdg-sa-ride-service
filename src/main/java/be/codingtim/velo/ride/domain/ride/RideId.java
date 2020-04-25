@@ -1,16 +1,16 @@
-package be.codingtim.velo.ride.domain.station;
+package be.codingtim.velo.ride.domain.ride;
 
 import java.util.Objects;
 
-public class LockId {
+public class RideId {
 
-    private int value;
+    private long value;
 
-    public LockId(int value) {
+    RideId(long value) {
         this.value = value;
     }
 
-    public int getValue() {
+    public long getValue() {
         return value;
     }
 
@@ -18,7 +18,7 @@ public class LockId {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LockId stationId = (LockId) o;
+        RideId stationId = (RideId) o;
         return value == stationId.value;
     }
 

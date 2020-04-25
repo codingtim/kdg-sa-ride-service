@@ -1,13 +1,10 @@
 package be.codingtim.velo.ride.domain.station;
 
 
-import be.codingtim.velo.ride.domain.vehicle.VehicleId;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Optional;
 
 @Entity
 @Table(name = "Locks")

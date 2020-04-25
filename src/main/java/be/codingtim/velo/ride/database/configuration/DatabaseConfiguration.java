@@ -30,13 +30,14 @@ public class DatabaseConfiguration {
         //https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#orm-hibernate
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         Properties hibernateProperties = new Properties();
-        hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");
+        hibernateProperties.put("hibernate.dialect", "org.hibernate.spatial.dialect.sqlserver.SqlServer2008SpatialDialect");
         hibernateProperties.put("hibernate.hbm2ddl.auto", "validate");
         localSessionFactoryBean.setHibernateProperties(hibernateProperties);
         localSessionFactoryBean.setDataSource(dataSource);
         localSessionFactoryBean.setPackagesToScan(
                 "be.codingtim.velo.ride.domain.station",
-                "be.codingtim.velo.ride.domain.user"
+                "be.codingtim.velo.ride.domain.user",
+                "be.codingtim.velo.ride.domain.ride"
         );
         return localSessionFactoryBean;
     }
