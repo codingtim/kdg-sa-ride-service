@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -45,9 +46,15 @@ public class DatabaseConfiguration {
 
     @Bean
     public HibernateTransactionManager hibernateTransactionManager(SessionFactory sessionFactory) {
+        //https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#orm-hibernate-straight
         return new HibernateTransactionManager(sessionFactory);
     }
 
-    //TODO exception translation
-    //https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#orm-exception-translation
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {
+        //https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#orm-exception-translation
+        //without: javax.persistence.NoResultException: No entity found for query
+        //with: org.springframework.dao.EmptyResultDataAccessException: No entity found for query; nested exception is javax.persistence.NoResultException: No entity found for query
+        return new PersistenceExceptionTranslationPostProcessor();
+    }
 }
