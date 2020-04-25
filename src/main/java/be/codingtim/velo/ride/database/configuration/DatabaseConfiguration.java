@@ -37,7 +37,8 @@ public class DatabaseConfiguration {
         localSessionFactoryBean.setPackagesToScan(
                 "be.codingtim.velo.ride.domain.station",
                 "be.codingtim.velo.ride.domain.user",
-                "be.codingtim.velo.ride.domain.ride"
+                "be.codingtim.velo.ride.domain.ride",
+                "be.codingtim.velo.ride.domain.vehicle"
         );
         return localSessionFactoryBean;
     }
