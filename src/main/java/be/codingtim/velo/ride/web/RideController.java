@@ -29,11 +29,13 @@ public class RideController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> startStationRide(@RequestBody StationRideDto dto) {
+        LOGGER.info("Starting station ride for user {} from station {}", dto.getUserId(), dto.getStationId());
         RideId rideId = rideFacade.startRide(dto.getUserId(), dto.getStationId());
+        long startedRideId = rideId.getValue();
+        LOGGER.info("Started station ride for user {} from station {} with id {}", dto.getUserId(), dto.getStationId(), startedRideId);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .header(HttpHeaders.LOCATION, "/api/rides/" + rideId.getValue())
+                .header(HttpHeaders.LOCATION, "/api/rides/" + startedRideId)
                 .build();
     }
 
-    //TODO exception translation
 }
