@@ -4,6 +4,7 @@ import be.codingtim.velo.ride.domain.location.GpsPoint;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,32 +18,38 @@ public class Station {
     )
     private int stationId;
 
-    @OneToMany(
-            fetch = FetchType.EAGER,
-            mappedBy = "stationId"
-    )
-    private List<Lock> locks;
-
     @Column(
             columnDefinition = "GEOMETRY",
             name = "GPSCoord"
     )
     private Point location;
 
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "stationId"
+    )
+    private List<Lock> locks;
+
     Station() {
         //default constructor
+    }
+
+    Station(int stationId, GpsPoint location, List<Lock> locks) {
+        this.stationId = stationId;
+        this.location = location.getPoint();
+        this.locks = new ArrayList<>(locks);
     }
 
     StationId getStationId() {
         return new StationId(stationId);
     }
 
-    List<Lock> getLocks() {
-        return locks;
-    }
-
     GpsPoint getLocation() {
         return GpsPoint.of(location);
+    }
+
+    List<Lock> getLocks() {
+        return locks;
     }
 
     public FreeVehicleAtStation getAvailableVehicle() {

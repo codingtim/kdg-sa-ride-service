@@ -36,6 +36,12 @@ public class Lock {
         //default constructor
     }
 
+    Lock(int lockId, int stationId, int stationLockId) {
+        this.lockId = lockId;
+        this.stationId = stationId;
+        this.stationLockId = stationLockId;
+    }
+
     LockId getLockId() {
         return new LockId(lockId);
     }

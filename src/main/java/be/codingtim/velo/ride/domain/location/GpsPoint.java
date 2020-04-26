@@ -27,6 +27,10 @@ public class GpsPoint {
         return new GpsPoint(point);
     }
 
+    public Point getPoint() {
+        return point;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
