@@ -44,9 +44,9 @@ public class Lock {
         return vehicleId != null;
     }
 
-    LockWithAvailableVehicle removeVehicle() {
-        LockWithAvailableVehicle lockWithAvailableVehicle = new LockWithAvailableVehicle(lockId, vehicleId);
+    FreeVehicleAtLock removeVehicle() {
+        FreeVehicleAtLock freeVehicleAtLock = new FreeVehicleAtLock(lockId, vehicleId);
         vehicleId = null;
-        return lockWithAvailableVehicle;
+        return freeVehicleAtLock;
     }
 }

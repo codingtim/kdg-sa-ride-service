@@ -45,12 +45,12 @@ public class Station {
         return GpsPoint.of(location);
     }
 
-    public LockWithAvailableVehicle getAvailableVehicle() {
+    public FreeVehicleAtStation getAvailableVehicle() {
         Lock lockWithVehicleAvailable = locks.stream()
                 .filter(Lock::hasVehicle)
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
-        return lockWithVehicleAvailable.removeVehicle();
+        return new FreeVehicleAtStation(lockWithVehicleAvailable.removeVehicle(), getLocation());
     }
 
 }
