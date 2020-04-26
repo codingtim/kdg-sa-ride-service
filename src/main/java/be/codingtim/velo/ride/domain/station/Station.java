@@ -1,5 +1,7 @@
 package be.codingtim.velo.ride.domain.station;
 
+import org.locationtech.jts.geom.Point;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,6 +22,12 @@ public class Station {
     )
     private List<Lock> locks;
 
+    @Column(
+            columnDefinition = "GEOMETRY",
+            name = "GPSCoord"
+    )
+    private Point location;
+
     Station() {
         //default constructor
     }
@@ -30,6 +38,10 @@ public class Station {
 
     List<Lock> getLocks() {
         return locks;
+    }
+
+    Point getLocation() {
+        return location;
     }
 
     public LockWithAvailableVehicle getAvailableVehicle() {

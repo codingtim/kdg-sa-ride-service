@@ -38,6 +38,11 @@ class RideRepositoryHibernateTest {
         assertEquals(new LockId(4069), stationRide.getEndLockId());
         assertEquals(new VehicleId(510), stationRide.getVehicleId());
         assertEquals(new SubscriptionId(1449), stationRide.getSubscriptionId());
+        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING) , 4326);
+        Point expectedStartPoint = geometryFactory.createPoint(new CoordinateXY(51.22210579324455, 4.40467399900234));
+        assertEquals(expectedStartPoint, stationRide.getStartPoint());
+        Point expectedEndPoint = geometryFactory.createPoint(new CoordinateXY(51.233335518955535, 4.413911263197972));
+        assertEquals(expectedEndPoint, stationRide.getEndPoint());
     }
 
     @Test
