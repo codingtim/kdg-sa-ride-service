@@ -53,6 +53,10 @@ public class Lock {
         return vehicleId != null;
     }
 
+    boolean isFree() {
+        return !hasVehicle();
+    }
+
     FreeVehicleAtLock removeVehicle() {
         FreeVehicleAtLock freeVehicleAtLock = new FreeVehicleAtLock(getLockId(), new VehicleId(vehicleId));
         vehicleId = null;

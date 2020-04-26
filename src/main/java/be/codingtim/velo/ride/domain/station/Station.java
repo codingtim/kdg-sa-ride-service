@@ -8,6 +8,7 @@ import org.locationtech.jts.geom.Point;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "Stations")
@@ -60,6 +61,13 @@ public class Station {
                 .findFirst()
                 .orElseThrow(() -> new StationHasNoAvailableVehicle(getStationId()));
         return new FreeVehicleAtStation(lockWithVehicleAvailable.removeVehicle(), getLocation());
+    }
+
+    public FreeStationLocks getFreeLocks() {
+        return new FreeStationLocks(locks.stream()
+                .filter(Lock::isFree)
+                .map(Lock::getLockId)
+                .collect(Collectors.toList()));
     }
 
     //TODO ONLY FOR TESTING, will refine once implementing

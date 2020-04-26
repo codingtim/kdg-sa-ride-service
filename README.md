@@ -12,3 +12,6 @@ Start a station ride
 
     curl -XPOST -H "Content-Type: application/json" -d '{"userId": 19534, "stationId": 1}' 'http://localhost:8082/api/rides'
 
+Get free locks of a station
+
+    curl -H "Accept: application/json" 'http://localhost:8082/api/stations/1/free-locks'

@@ -18,7 +18,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/api/rides")
 public class RideController {
 
-    //TODO logging
     private static final Logger LOGGER = LoggerFactory.getLogger(RideController.class);
 
     private final RideFacade rideFacade;
