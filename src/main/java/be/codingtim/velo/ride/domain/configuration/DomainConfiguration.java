@@ -1,7 +1,10 @@
 package be.codingtim.velo.ride.domain.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.Clock;
 
 @Configuration
 @ComponentScan(
@@ -9,4 +12,8 @@ import org.springframework.context.annotation.Configuration;
 )
 public class DomainConfiguration {
 
+    @Bean
+    public Clock clock() {
+        return Clock.systemUTC();
+    }
 }

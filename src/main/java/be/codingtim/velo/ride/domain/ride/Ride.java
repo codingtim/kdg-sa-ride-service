@@ -9,6 +9,8 @@ import org.hibernate.annotations.DiscriminatorFormula;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
+import java.time.Clock;
+import java.time.Instant;
 
 @Entity(name = "Ride")
 @Table(name = "Rides")
@@ -53,15 +55,28 @@ public class Ride {
     )
     private Point endPoint;
 
+    @Column(
+            columnDefinition = "DATETIME",
+            name = "StartTime"
+    )
+    private Instant startTime;
+
+    @Column(
+            columnDefinition = "DATETIME",
+            name = "EndTime"
+    )
+    private Instant endTime;
+
     Ride() {
         //default constructor
     }
 
-    public Ride(Vehicle vehicle, ActiveSubscription activeSubscription, GpsPoint startPoint) {
+    public Ride(Vehicle vehicle, ActiveSubscription activeSubscription, GpsPoint startPoint, Clock clock) {
         vehicleId = vehicle.getVehicleId().getValue();
         vehicle.startRide();
         subscriptionId = activeSubscription.getSubscriptionId().getValue();
         this.startPoint = startPoint.getPoint();
+        this.startTime = Instant.now(clock);
     }
 
     RideId getRideId() {
@@ -82,5 +97,13 @@ public class Ride {
 
     GpsPoint getEndPoint() {
         return GpsPoint.of(endPoint);
+    }
+
+    Instant getStartTime() {
+        return startTime;
+    }
+
+    Instant getEndTime() {
+        return endTime;
     }
 }

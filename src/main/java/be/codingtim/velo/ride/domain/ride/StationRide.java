@@ -8,6 +8,7 @@ import be.codingtim.velo.ride.domain.vehicle.Vehicle;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.time.Clock;
 import java.util.Optional;
 
 @Entity(name = "StationRide")
@@ -30,8 +31,8 @@ public class StationRide extends Ride {
         //default constructor
     }
 
-    public StationRide(Vehicle vehicle, FreeVehicleAtStation freeVehicle, ActiveSubscription activeSubscription) {
-        super(vehicle, activeSubscription, freeVehicle.getLocation());
+    public StationRide(Vehicle vehicle, FreeVehicleAtStation freeVehicle, ActiveSubscription activeSubscription, Clock clock) {
+        super(vehicle, activeSubscription, freeVehicle.getLocation(), clock);
         this.startLockId = freeVehicle.getLockId().getValue();
     }
 

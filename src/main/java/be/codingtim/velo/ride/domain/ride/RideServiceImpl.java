@@ -10,6 +10,8 @@ import be.codingtim.velo.ride.domain.vehicle.Vehicles;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Clock;
+
 @Service
 class RideServiceImpl implements StationRideService {
 
@@ -25,11 +27,11 @@ class RideServiceImpl implements StationRideService {
 
     @Override
     @Transactional
-    public RideId startRide(ActiveSubscription activeSubscription, StationId stationId) {
+    public RideId startRide(ActiveSubscription activeSubscription, StationId stationId, Clock clock) {
         Station station = stations.get(stationId);
         FreeVehicleAtStation freeVehicleAtStation = station.getFreeVehicle();
         Vehicle vehicle = vehicles.get(freeVehicleAtStation.getVehicleId());
-        StationRide ride = new StationRide(vehicle, freeVehicleAtStation, activeSubscription);
+        StationRide ride = new StationRide(vehicle, freeVehicleAtStation, activeSubscription, clock);
         rideRepository.save(ride);
         return ride.getRideId();
     }

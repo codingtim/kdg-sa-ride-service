@@ -9,6 +9,7 @@ import be.codingtim.velo.ride.domain.user.UserId;
 import be.codingtim.velo.ride.domain.user.Users;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.LocalDate;
 
 @Service
@@ -16,16 +17,18 @@ class RideFacadeImpl implements RideFacade {
 
     private final Users users;
     private final StationRideService stationRideService;
+    private final Clock clock;
 
-    RideFacadeImpl(Users users, StationRideService stationRideService) {
+    RideFacadeImpl(Users users, StationRideService stationRideService, Clock clock) {
         this.users = users;
         this.stationRideService = stationRideService;
+        this.clock = clock;
     }
 
     @Override
     public RideId startRide(Integer userId, Integer stationId) {
         User user = users.get(new UserId(userId));
-        ActiveSubscription activeSubscription = user.getActiveSubscription(LocalDate.now());
-        return stationRideService.startRide(activeSubscription, new StationId(stationId));
+        ActiveSubscription activeSubscription = user.getActiveSubscription(LocalDate.now(clock));
+        return stationRideService.startRide(activeSubscription, new StationId(stationId), clock);
     }
 }
