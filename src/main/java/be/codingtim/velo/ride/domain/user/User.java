@@ -1,6 +1,10 @@
 package be.codingtim.velo.ride.domain.user;
 
+import be.codingtim.velo.ride.domain.user.exception.UserHadNoActiveSubscription;
+
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,8 +28,21 @@ public class User {
         //default constuctor
     }
 
+    User(int userId, List<Subscription> subscriptions) {
+        this.userId = userId;
+        this.subscriptions = new ArrayList<>(subscriptions);
+    }
+
     List<Subscription> getSubscriptions() {
         return subscriptions;
     }
 
+    ActiveSubscription getActiveSubscription(LocalDate today) {
+        return subscriptions.stream()
+                .filter(subscription -> subscription.isValidOn(today))
+                .map(Subscription::getSubscriptionId)
+                .map(ActiveSubscription::new)
+                .findFirst()
+                .orElseThrow(UserHadNoActiveSubscription::new);
+    }
 }

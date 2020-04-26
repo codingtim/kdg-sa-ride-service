@@ -25,7 +25,6 @@ public class Subscription {
     )
     private LocalDate validFrom;
 
-
     @Convert(converter = SubscriptionTypeAttributeConverter.class)
     @Column(
             columnDefinition = "TINYINT",
@@ -37,11 +36,25 @@ public class Subscription {
         //default constructor
     }
 
+    Subscription(int subscriptionId, LocalDate validFrom, SubscriptionType subscriptionType) {
+        this.subscriptionId = subscriptionId;
+        this.validFrom = validFrom;
+        this.subscriptionType = subscriptionType;
+    }
+
     LocalDate getValidFrom() {
         return validFrom;
     }
 
     SubscriptionType getSubscriptionType() {
         return subscriptionType;
+    }
+
+    SubscriptionId getSubscriptionId() {
+        return new SubscriptionId(subscriptionId);
+    }
+
+    boolean isValidOn(LocalDate today) {
+        return today.isBefore(validFrom.plus(subscriptionType.getValidPeriod()));
     }
 }
