@@ -1,5 +1,9 @@
 # Ride service
 
+## clean install
+
+In order to run `mvn clean install` a local sql server db should be running.
+
 ## Requests
 
 Start a station ride

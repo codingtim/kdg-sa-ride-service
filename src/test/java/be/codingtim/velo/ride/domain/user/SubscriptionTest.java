@@ -31,6 +31,7 @@ class SubscriptionTest {
     void weekSubscription_isValidToday() {
         assertTrue(subscriptionFromTodayWithType(WEEK).isValidOn(TODAY));
     }
+
     @Test
     void weekSubscription_isValidTomorrow() {
         assertTrue(subscriptionFromTodayWithType(WEEK).isValidOn(TOMORROW));
