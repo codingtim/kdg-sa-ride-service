@@ -1,6 +1,6 @@
 package be.codingtim.velo.ride.domain.user;
 
-import be.codingtim.velo.ride.domain.user.exception.UserHadNoActiveSubscription;
+import be.codingtim.velo.ride.domain.user.exception.UserHasNoActiveSubscription;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -19,7 +19,7 @@ class UserTest {
 
     @Test
     void getActiveSubscription_whenNoActive_thenException() {
-        assertThrows(UserHadNoActiveSubscription.class, () ->
+        assertThrows(UserHasNoActiveSubscription.class, () ->
                 USER_WITHOUT_ACTIVE_SUBSCRIPTION.getActiveSubscription(LocalDate.now())
         );
     }

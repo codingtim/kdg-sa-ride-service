@@ -23,6 +23,7 @@ public class DatabaseConfiguration {
         //https://github.com/brettwooldridge/HikariCP
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:sqlserver://localhost:1433;databaseName=velosa;user=sa;password=changeMe1;");
+        config.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         return new HikariDataSource(config);
     }
 

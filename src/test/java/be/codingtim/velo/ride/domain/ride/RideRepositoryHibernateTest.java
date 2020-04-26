@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
@@ -33,7 +35,7 @@ class RideRepositoryHibernateTest {
         assertTrue(ride instanceof StationRide);
         StationRide stationRide = (StationRide) ride;
         assertEquals(new LockId(2685), stationRide.getStartLockId());
-        assertEquals(new LockId(4069), stationRide.getEndLockId());
+        assertEquals(Optional.of(new LockId(4069)), stationRide.getEndLockId());
         assertEquals(new VehicleId(510), stationRide.getVehicleId());
         assertEquals(new SubscriptionId(1449), stationRide.getSubscriptionId());
         assertEquals(GpsPoint.of(51.22210579324455, 4.40467399900234), stationRide.getStartPoint());

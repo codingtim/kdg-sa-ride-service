@@ -8,6 +8,7 @@ import be.codingtim.velo.ride.domain.vehicle.Vehicle;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.util.Optional;
 
 @Entity(name = "StationRide")
 @DiscriminatorValue(value = "StationRide")
@@ -23,7 +24,7 @@ public class StationRide extends Ride {
             columnDefinition = "SMALLINT",
             name = "EndlockId"
     )
-    private int endLockId;
+    private Integer endLockId;
 
     StationRide() {
         //default constructor
@@ -38,7 +39,7 @@ public class StationRide extends Ride {
         return new LockId(startLockId);
     }
 
-    LockId getEndLockId() {
-        return new LockId(endLockId);
+    Optional<LockId> getEndLockId() {
+        return endLockId == null ? Optional.empty() : Optional.of(new LockId(endLockId));
     }
 }

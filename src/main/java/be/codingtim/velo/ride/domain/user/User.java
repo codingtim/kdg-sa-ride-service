@@ -1,6 +1,6 @@
 package be.codingtim.velo.ride.domain.user;
 
-import be.codingtim.velo.ride.domain.user.exception.UserHadNoActiveSubscription;
+import be.codingtim.velo.ride.domain.user.exception.UserHasNoActiveSubscription;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -37,12 +37,12 @@ public class User {
         return subscriptions;
     }
 
-    ActiveSubscription getActiveSubscription(LocalDate today) {
+    public ActiveSubscription getActiveSubscription(LocalDate today) {
         return subscriptions.stream()
                 .filter(subscription -> subscription.isValidOn(today))
                 .map(Subscription::getSubscriptionId)
                 .map(ActiveSubscription::new)
                 .findFirst()
-                .orElseThrow(UserHadNoActiveSubscription::new);
+                .orElseThrow(UserHasNoActiveSubscription::new);
     }
 }

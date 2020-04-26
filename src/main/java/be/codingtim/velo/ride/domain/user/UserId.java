@@ -1,12 +1,12 @@
-package be.codingtim.velo.ride.domain.station;
+package be.codingtim.velo.ride.domain.user;
 
 import java.util.Objects;
 
-public class StationId {
+public class UserId {
 
     private int value;
 
-    public StationId(int value) {
+    public UserId(int value) {
         this.value = value;
     }
 
@@ -18,7 +18,7 @@ public class StationId {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StationId stationId = (StationId) o;
+        UserId stationId = (UserId) o;
         return value == stationId.value;
     }
 

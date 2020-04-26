@@ -22,6 +22,7 @@ import javax.persistence.*;
 public class Ride {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(
             columnDefinition = "BIGINT",
             name = "RideId"

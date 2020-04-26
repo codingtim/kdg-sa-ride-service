@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 class UserRepositoryHibernate implements UserRepository {
 
@@ -17,9 +19,10 @@ class UserRepositoryHibernate implements UserRepository {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public User findById(int userId) {
-        return sessionFactory.getCurrentSession()
+        List<User> users = sessionFactory.getCurrentSession()
                 .createQuery("from User where userId = :userId", User.class)
                 .setParameter("userId", userId)
-                .getSingleResult();
+                .getResultList();
+        return users.isEmpty() ? null : users.get(0);
     }
 }
