@@ -1,12 +1,9 @@
 package be.codingtim.velo.ride.domain.station;
 
 import be.codingtim.velo.ride.database.configuration.DatabaseConfiguration;
+import be.codingtim.velo.ride.domain.location.GpsPoint;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.locationtech.jts.geom.CoordinateXY;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -34,9 +31,7 @@ class StationRepositoryHibernateTest {
         List<Lock> locks = station.getLocks();
         assertEquals(locks.size(), 18);
         assertEquals(locks.get(0).getLockId(), new LockId(1));
-        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(PrecisionModel.FLOATING), 4326);
-        Point expectedLocation = geometryFactory.createPoint(new CoordinateXY(51.228085001372236, 4.408997273922094));
-        assertEquals(expectedLocation, station.getLocation());
+        assertEquals(GpsPoint.of(51.228085001372236, 4.408997273922094), station.getLocation());
     }
 
     @Configuration

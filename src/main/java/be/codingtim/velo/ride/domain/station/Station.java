@@ -1,5 +1,6 @@
 package be.codingtim.velo.ride.domain.station;
 
+import be.codingtim.velo.ride.domain.location.GpsPoint;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
@@ -40,8 +41,8 @@ public class Station {
         return locks;
     }
 
-    Point getLocation() {
-        return location;
+    GpsPoint getLocation() {
+        return GpsPoint.of(location);
     }
 
     public LockWithAvailableVehicle getAvailableVehicle() {
