@@ -1,6 +1,9 @@
 package be.codingtim.velo.ride.domain.ride;
 
+import be.codingtim.velo.ride.domain.station.FreeVehicleAtStation;
 import be.codingtim.velo.ride.domain.station.LockId;
+import be.codingtim.velo.ride.domain.user.ActiveSubscription;
+import be.codingtim.velo.ride.domain.vehicle.Vehicle;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -24,6 +27,11 @@ public class StationRide extends Ride {
 
     StationRide() {
         //default constructor
+    }
+
+    public StationRide(Vehicle vehicle, FreeVehicleAtStation freeVehicle, ActiveSubscription activeSubscription) {
+        super(vehicle, activeSubscription, freeVehicle.getLocation());
+        this.startLockId = freeVehicle.getLockId().getValue();
     }
 
     LockId getStartLockId() {

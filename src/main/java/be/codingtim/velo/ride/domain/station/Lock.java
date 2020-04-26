@@ -2,6 +2,7 @@ package be.codingtim.velo.ride.domain.station;
 
 
 import be.codingtim.velo.ride.domain.vehicle.Vehicle;
+import be.codingtim.velo.ride.domain.vehicle.VehicleId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,7 +54,7 @@ public class Lock {
     }
 
     FreeVehicleAtLock removeVehicle() {
-        FreeVehicleAtLock freeVehicleAtLock = new FreeVehicleAtLock(lockId, vehicleId);
+        FreeVehicleAtLock freeVehicleAtLock = new FreeVehicleAtLock(getLockId(), new VehicleId(vehicleId));
         vehicleId = null;
         return freeVehicleAtLock;
     }

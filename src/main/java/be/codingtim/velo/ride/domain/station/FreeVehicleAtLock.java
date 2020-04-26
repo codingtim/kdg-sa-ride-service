@@ -1,15 +1,25 @@
 package be.codingtim.velo.ride.domain.station;
 
+import be.codingtim.velo.ride.domain.vehicle.VehicleId;
+
 import java.util.Objects;
 
 class FreeVehicleAtLock {
 
-    private final int lockId;
-    private final int vehicleId;
+    private final LockId lockId;
+    private final VehicleId vehicleId;
 
-    FreeVehicleAtLock(int lockId, int vehicleId) {
+    FreeVehicleAtLock(LockId lockId, VehicleId vehicleId) {
         this.lockId = lockId;
         this.vehicleId = vehicleId;
+    }
+
+    LockId getLockId() {
+        return lockId;
+    }
+
+    VehicleId getVehicleId() {
+        return vehicleId;
     }
 
     @Override
@@ -17,12 +27,20 @@ class FreeVehicleAtLock {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FreeVehicleAtLock that = (FreeVehicleAtLock) o;
-        return lockId == that.lockId &&
-                vehicleId == that.vehicleId;
+        return Objects.equals(lockId, that.lockId) &&
+                Objects.equals(vehicleId, that.vehicleId);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(lockId, vehicleId);
+    }
+
+    @Override
+    public String toString() {
+        return "FreeVehicleAtLock{" +
+                "lockId=" + lockId +
+                ", vehicleId=" + vehicleId +
+                '}';
     }
 }

@@ -4,7 +4,12 @@ public class ActiveSubscription {
 
     private final SubscriptionId subscriptionId;
 
-    ActiveSubscription(SubscriptionId subscriptionId) {
+    //TODO remove public
+    public ActiveSubscription(SubscriptionId subscriptionId) {
         this.subscriptionId = subscriptionId;
+    }
+
+    public SubscriptionId getSubscriptionId() {
+        return subscriptionId;
     }
 }

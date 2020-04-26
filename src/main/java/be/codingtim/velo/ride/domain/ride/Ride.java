@@ -1,7 +1,9 @@
 package be.codingtim.velo.ride.domain.ride;
 
 import be.codingtim.velo.ride.domain.location.GpsPoint;
+import be.codingtim.velo.ride.domain.user.ActiveSubscription;
 import be.codingtim.velo.ride.domain.user.SubscriptionId;
+import be.codingtim.velo.ride.domain.vehicle.Vehicle;
 import be.codingtim.velo.ride.domain.vehicle.VehicleId;
 import org.hibernate.annotations.DiscriminatorFormula;
 import org.locationtech.jts.geom.Point;
@@ -52,6 +54,13 @@ public class Ride {
 
     Ride() {
         //default constructor
+    }
+
+    public Ride(Vehicle vehicle, ActiveSubscription activeSubscription, GpsPoint startPoint) {
+        vehicleId = vehicle.getVehicleId().getValue();
+        vehicle.startRide();
+        subscriptionId = activeSubscription.getSubscriptionId().getValue();
+        this.startPoint = startPoint.getPoint();
     }
 
     RideId getRideId() {

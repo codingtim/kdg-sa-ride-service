@@ -1,6 +1,7 @@
 package be.codingtim.velo.ride.domain.station;
 
 import be.codingtim.velo.ride.domain.station.exception.StationHasNoAvailableVehicle;
+import be.codingtim.velo.ride.domain.vehicle.VehicleData;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ class StationTest {
             Station station = HALF_FULL_STATION;
             FreeVehicleAtStation freeVehicleAtStation = station.getFreeVehicle();
             FreeVehicleAtStation expected = new FreeVehicleAtStation(
-                    new FreeVehicleAtLock(HALF_FULL_STATION_LOCK_1.getLockId().getValue(), 1),
+                    new FreeVehicleAtLock(HALF_FULL_STATION_LOCK_1.getLockId(), VehicleData.STATION_VEHICLE_1.getVehicleId()),
                     station.getLocation()
             );
             assertEquals(expected, freeVehicleAtStation);

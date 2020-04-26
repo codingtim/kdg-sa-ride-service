@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -50,7 +51,10 @@ class VehicleRepositoryHibernateTest {
 
     @Configuration
     @Import(DatabaseConfiguration.class)
-    @ComponentScan(basePackages = "be.codingtim.velo.ride.domain.vehicle")
+    @ComponentScan(
+            basePackages = "be.codingtim.velo.ride.domain.vehicle",
+            excludeFilters = @ComponentScan.Filter(Service.class)
+    )
     static class TestConfiguration {
 
     }

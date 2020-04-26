@@ -46,4 +46,9 @@ public class Vehicle {
         if (this.lockId != null) throw new IllegalStateException();
         this.lockId = lockId.getValue();
     }
+
+    //grr I don't like this
+    public void startRide() {
+        this.lockId = null;
+    }
 }

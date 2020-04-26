@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -53,7 +54,10 @@ class RideRepositoryHibernateTest {
 
     @Configuration
     @Import(DatabaseConfiguration.class)
-    @ComponentScan(basePackages = "be.codingtim.velo.ride.domain.ride")
+    @ComponentScan(
+            basePackages = "be.codingtim.velo.ride.domain.ride",
+            excludeFilters = @ComponentScan.Filter(Service.class)
+    )
     static class TestConfiguration {
 
     }

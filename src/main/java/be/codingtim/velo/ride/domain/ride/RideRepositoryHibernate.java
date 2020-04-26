@@ -22,4 +22,9 @@ class RideRepositoryHibernate implements RideRepository {
                 .setParameter("rideId", rideId)
                 .getSingleResult();
     }
+
+    @Override
+    public void save(Ride ride) {
+        sessionFactory.getCurrentSession().save(ride);
+    }
 }
