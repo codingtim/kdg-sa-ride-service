@@ -1,6 +1,8 @@
 package be.codingtim.velo.ride.domain.station;
 
 import be.codingtim.velo.ride.domain.location.GpsPoint;
+import be.codingtim.velo.ride.domain.station.exception.StationHasNoAvailableVehicle;
+import be.codingtim.velo.ride.domain.vehicle.Vehicle;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
@@ -52,12 +54,20 @@ public class Station {
         return locks;
     }
 
-    public FreeVehicleAtStation getAvailableVehicle() {
+    public FreeVehicleAtStation getFreeVehicle() {
         Lock lockWithVehicleAvailable = locks.stream()
                 .filter(Lock::hasVehicle)
                 .findFirst()
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(() -> new StationHasNoAvailableVehicle(getStationId()));
         return new FreeVehicleAtStation(lockWithVehicleAvailable.removeVehicle(), getLocation());
     }
 
+    //TODO ONLY FOR TESTING, will refine once implementing
+    void lock(Vehicle vehicle) {
+        Lock freeLock = locks.stream()
+                .filter(lock -> !lock.hasVehicle())
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+        freeLock.lock(vehicle);
+    }
 }

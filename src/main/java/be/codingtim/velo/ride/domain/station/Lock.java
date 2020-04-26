@@ -1,6 +1,8 @@
 package be.codingtim.velo.ride.domain.station;
 
 
+import be.codingtim.velo.ride.domain.vehicle.Vehicle;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -54,5 +56,12 @@ public class Lock {
         FreeVehicleAtLock freeVehicleAtLock = new FreeVehicleAtLock(lockId, vehicleId);
         vehicleId = null;
         return freeVehicleAtLock;
+    }
+
+    //TODO ONLY FOR TESTING, will refine once implementing
+    public void lock(Vehicle vehicle) {
+        if (vehicleId != null) throw new IllegalStateException();
+        this.vehicleId = vehicle.getVehicleId().getValue();
+        vehicle.lockAt(getLockId());
     }
 }
