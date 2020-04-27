@@ -2,10 +2,7 @@ package be.codingtim.velo.ride.domain.vehicle;
 
 import be.codingtim.velo.ride.domain.station.LockId;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Optional;
 
 @Entity
@@ -25,6 +22,10 @@ public class Vehicle {
     )
     private Integer lockId;
 
+    @ManyToOne
+    @JoinColumn(name = "BikeLotId")
+    private Bikelot bikelot;
+
     Vehicle() {
         //default constuctor
     }
@@ -41,6 +42,10 @@ public class Vehicle {
         return Optional.ofNullable(lockId);
     }
 
+    public VehicleType getVehicleType() {
+        return bikelot.getVehicleType();
+    }
+
     //TODO ONLY FOR TESTING, will refine once implementing
     public void lockAt(LockId lockId) {
         if (this.lockId != null) throw new IllegalStateException();
@@ -51,4 +56,5 @@ public class Vehicle {
     public void startRide() {
         this.lockId = null;
     }
+
 }
