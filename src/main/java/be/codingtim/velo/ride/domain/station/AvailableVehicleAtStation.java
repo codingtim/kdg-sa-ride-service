@@ -5,13 +5,13 @@ import be.codingtim.velo.ride.domain.vehicle.VehicleId;
 
 import java.util.Objects;
 
-public class FreeVehicleAtStation {
+public class AvailableVehicleAtStation {
 
-    private final FreeVehicleAtLock freeVehicleAtLock;
+    private final AvailableVehicleAtLock availableVehicleAtLock;
     private final GpsPoint location;
 
-    FreeVehicleAtStation(FreeVehicleAtLock freeVehicleAtLock, GpsPoint location) {
-        this.freeVehicleAtLock = freeVehicleAtLock;
+    AvailableVehicleAtStation(AvailableVehicleAtLock availableVehicleAtLock, GpsPoint location) {
+        this.availableVehicleAtLock = availableVehicleAtLock;
         this.location = location;
     }
 
@@ -20,31 +20,31 @@ public class FreeVehicleAtStation {
     }
 
     public LockId getLockId() {
-        return freeVehicleAtLock.getLockId();
+        return availableVehicleAtLock.getLockId();
     }
 
     public VehicleId getVehicleId() {
-        return freeVehicleAtLock.getVehicleId();
+        return availableVehicleAtLock.getVehicleId();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FreeVehicleAtStation that = (FreeVehicleAtStation) o;
-        return Objects.equals(freeVehicleAtLock, that.freeVehicleAtLock) &&
+        AvailableVehicleAtStation that = (AvailableVehicleAtStation) o;
+        return Objects.equals(availableVehicleAtLock, that.availableVehicleAtLock) &&
                 Objects.equals(location, that.location);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(freeVehicleAtLock, location);
+        return Objects.hash(availableVehicleAtLock, location);
     }
 
     @Override
     public String toString() {
         return "FreeVehicleAtStation{" +
-                "freeVehicleAtLock=" + freeVehicleAtLock +
+                "freeVehicleAtLock=" + availableVehicleAtLock +
                 ", location=" + location +
                 '}';
     }

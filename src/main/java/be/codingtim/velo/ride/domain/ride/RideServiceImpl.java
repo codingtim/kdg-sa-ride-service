@@ -1,6 +1,6 @@
 package be.codingtim.velo.ride.domain.ride;
 
-import be.codingtim.velo.ride.domain.station.FreeVehicleAtStation;
+import be.codingtim.velo.ride.domain.station.AvailableVehicleAtStation;
 import be.codingtim.velo.ride.domain.station.Station;
 import be.codingtim.velo.ride.domain.station.StationId;
 import be.codingtim.velo.ride.domain.station.Stations;
@@ -29,9 +29,9 @@ class RideServiceImpl implements StationRideService {
     @Transactional
     public RideId startRide(ActiveSubscription activeSubscription, StationId stationId, Clock clock) {
         Station station = stations.get(stationId);
-        FreeVehicleAtStation freeVehicleAtStation = station.getFreeVehicle();
-        Vehicle vehicle = vehicles.get(freeVehicleAtStation.getVehicleId());
-        StationRide ride = new StationRide(vehicle, freeVehicleAtStation, activeSubscription, clock);
+        AvailableVehicleAtStation availableVehicleAtStation = station.getAvailableVehicle();
+        Vehicle vehicle = vehicles.get(availableVehicleAtStation.getVehicleId());
+        StationRide ride = new StationRide(vehicle, availableVehicleAtStation, activeSubscription, clock);
         rideRepository.save(ride);
         return ride.getRideId();
     }

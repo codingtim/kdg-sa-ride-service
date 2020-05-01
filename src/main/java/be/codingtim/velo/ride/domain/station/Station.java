@@ -55,12 +55,12 @@ public class Station {
         return locks;
     }
 
-    public FreeVehicleAtStation getFreeVehicle() {
+    public AvailableVehicleAtStation getAvailableVehicle() {
         Lock lockWithVehicleAvailable = locks.stream()
                 .filter(Lock::hasVehicle)
                 .findFirst()
                 .orElseThrow(() -> new StationHasNoAvailableVehicle(getStationId()));
-        return new FreeVehicleAtStation(lockWithVehicleAvailable.removeVehicle(), getLocation());
+        return new AvailableVehicleAtStation(lockWithVehicleAvailable.removeVehicle(), getLocation());
     }
 
     public FreeStationLocks getFreeLocks() {

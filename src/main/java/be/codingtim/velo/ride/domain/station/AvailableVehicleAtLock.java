@@ -4,12 +4,12 @@ import be.codingtim.velo.ride.domain.vehicle.VehicleId;
 
 import java.util.Objects;
 
-class FreeVehicleAtLock {
+class AvailableVehicleAtLock {
 
     private final LockId lockId;
     private final VehicleId vehicleId;
 
-    FreeVehicleAtLock(LockId lockId, VehicleId vehicleId) {
+    AvailableVehicleAtLock(LockId lockId, VehicleId vehicleId) {
         this.lockId = lockId;
         this.vehicleId = vehicleId;
     }
@@ -26,7 +26,7 @@ class FreeVehicleAtLock {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FreeVehicleAtLock that = (FreeVehicleAtLock) o;
+        AvailableVehicleAtLock that = (AvailableVehicleAtLock) o;
         return Objects.equals(lockId, that.lockId) &&
                 Objects.equals(vehicleId, that.vehicleId);
     }

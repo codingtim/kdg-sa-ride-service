@@ -57,10 +57,10 @@ public class Lock {
         return !hasVehicle();
     }
 
-    FreeVehicleAtLock removeVehicle() {
-        FreeVehicleAtLock freeVehicleAtLock = new FreeVehicleAtLock(getLockId(), new VehicleId(vehicleId));
+    AvailableVehicleAtLock removeVehicle() {
+        AvailableVehicleAtLock availableVehicleAtLock = new AvailableVehicleAtLock(getLockId(), new VehicleId(vehicleId));
         vehicleId = null;
-        return freeVehicleAtLock;
+        return availableVehicleAtLock;
     }
 
     //TODO ONLY FOR TESTING, will refine once implementing

@@ -17,17 +17,17 @@ class StationTest {
         @Test
         void vehicleAvailable() {
             Station station = HALF_FULL_STATION;
-            FreeVehicleAtStation freeVehicleAtStation = station.getFreeVehicle();
-            FreeVehicleAtStation expected = new FreeVehicleAtStation(
-                    new FreeVehicleAtLock(HALF_FULL_STATION_LOCK_1.getLockId(), VehicleData.STATION_VEHICLE_1.getVehicleId()),
+            AvailableVehicleAtStation availableVehicleAtStation = station.getAvailableVehicle();
+            AvailableVehicleAtStation expected = new AvailableVehicleAtStation(
+                    new AvailableVehicleAtLock(HALF_FULL_STATION_LOCK_1.getLockId(), VehicleData.STATION_VEHICLE_1.getVehicleId()),
                     station.getLocation()
             );
-            assertEquals(expected, freeVehicleAtStation);
+            assertEquals(expected, availableVehicleAtStation);
         }
 
         @Test
         void noVehicleAvailable() {
-            assertThrows(StationHasNoAvailableVehicle.class, EMPTY_STATION::getFreeVehicle);
+            assertThrows(StationHasNoAvailableVehicle.class, EMPTY_STATION::getAvailableVehicle);
         }
     }
 }

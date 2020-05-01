@@ -1,6 +1,6 @@
 package be.codingtim.velo.ride.domain.ride;
 
-import be.codingtim.velo.ride.domain.station.FreeVehicleAtStation;
+import be.codingtim.velo.ride.domain.station.AvailableVehicleAtStation;
 import be.codingtim.velo.ride.domain.station.LockId;
 import be.codingtim.velo.ride.domain.user.ActiveSubscription;
 import be.codingtim.velo.ride.domain.vehicle.Vehicle;
@@ -31,7 +31,7 @@ public class StationRide extends Ride {
         //default constructor
     }
 
-    public StationRide(Vehicle vehicle, FreeVehicleAtStation freeVehicle, ActiveSubscription activeSubscription, Clock clock) {
+    public StationRide(Vehicle vehicle, AvailableVehicleAtStation freeVehicle, ActiveSubscription activeSubscription, Clock clock) {
         super(vehicle, activeSubscription, freeVehicle.getLocation(), clock);
         this.startLockId = freeVehicle.getLockId().getValue();
     }
