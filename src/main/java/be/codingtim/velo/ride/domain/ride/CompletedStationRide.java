@@ -1,6 +1,6 @@
 package be.codingtim.velo.ride.domain.ride;
 
-import be.codingtim.velo.ride.domain.payment.BillableRide;
+import be.codingtim.velo.ride.domain.bill.BillableRide;
 import be.codingtim.velo.ride.domain.user.SubscriptionType;
 import be.codingtim.velo.ride.domain.user.User;
 import be.codingtim.velo.ride.domain.user.UserId;

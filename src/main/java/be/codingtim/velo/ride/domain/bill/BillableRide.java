@@ -1,4 +1,4 @@
-package be.codingtim.velo.ride.domain.payment;
+package be.codingtim.velo.ride.domain.bill;
 
 import be.codingtim.velo.ride.domain.user.SubscriptionType;
 import be.codingtim.velo.ride.domain.user.UserId;
