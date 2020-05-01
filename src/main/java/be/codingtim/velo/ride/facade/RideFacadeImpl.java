@@ -1,5 +1,7 @@
 package be.codingtim.velo.ride.facade;
 
+import be.codingtim.velo.ride.domain.bill.Bills;
+import be.codingtim.velo.ride.domain.ride.CompletedStationRide;
 import be.codingtim.velo.ride.domain.ride.RideId;
 import be.codingtim.velo.ride.domain.ride.StationRideService;
 import be.codingtim.velo.ride.domain.station.LockId;
@@ -18,11 +20,13 @@ class RideFacadeImpl implements RideFacade {
 
     private final Users users;
     private final StationRideService stationRideService;
+    private final Bills bills;
     private final Clock clock;
 
-    RideFacadeImpl(Users users, StationRideService stationRideService, Clock clock) {
+    RideFacadeImpl(Users users, StationRideService stationRideService, Bills bills, Clock clock) {
         this.users = users;
         this.stationRideService = stationRideService;
+        this.bills = bills;
         this.clock = clock;
     }
 
@@ -36,6 +40,7 @@ class RideFacadeImpl implements RideFacade {
     @Override
     public void endRide(Integer userId, Integer lockId) {
         User user = users.get(new UserId(userId));
-        stationRideService.endRide(user, new LockId(lockId), clock);
+        CompletedStationRide completedStationRide = stationRideService.endRide(user, new LockId(lockId), clock);
+        bills.createBillFor(completedStationRide);
     }
 }
