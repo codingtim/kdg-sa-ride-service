@@ -25,9 +25,9 @@ public class StationController {
     @RequestMapping(method = RequestMethod.GET, path = "/{stationId}/free-locks", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Integer>> getFreeLocks(@PathVariable int stationId) {
         Station station = stations.get(new StationId(stationId));
-        FreeStationLocks freeStationLocks = station.getFreeLocks();
+        StationLocksWithoutVehicle stationLocksWithoutVehicle = station.getLocksWithoutVehicle();
         return ResponseEntity.ok()
-                .body(freeStationLocks.getLockIds().stream().map(LockId::getValue).collect(Collectors.toList()));
+                .body(stationLocksWithoutVehicle.getLockIds().stream().map(LockId::getValue).collect(Collectors.toList()));
     }
 
 }
