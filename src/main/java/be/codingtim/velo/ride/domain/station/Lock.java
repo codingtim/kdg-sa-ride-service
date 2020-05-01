@@ -63,10 +63,10 @@ public class Lock {
         return availableVehicleAtLock;
     }
 
-    //TODO ONLY FOR TESTING, will refine once implementing
-    public void lock(Vehicle vehicle) {
+    VehicleLockedAtLock lock(Vehicle vehicle) {
         if (vehicleId != null) throw new IllegalStateException();
         this.vehicleId = vehicle.getVehicleId().getValue();
         vehicle.lockAt(getLockId());
+        return new VehicleLockedAtLock(getLockId(), vehicle.getVehicleId());
     }
 }

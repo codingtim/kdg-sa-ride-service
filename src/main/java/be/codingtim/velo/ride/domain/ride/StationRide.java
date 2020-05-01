@@ -2,6 +2,7 @@ package be.codingtim.velo.ride.domain.ride;
 
 import be.codingtim.velo.ride.domain.station.AvailableVehicleAtStation;
 import be.codingtim.velo.ride.domain.station.LockId;
+import be.codingtim.velo.ride.domain.station.VehicleLockedAtStation;
 import be.codingtim.velo.ride.domain.user.ActiveSubscription;
 import be.codingtim.velo.ride.domain.vehicle.Vehicle;
 
@@ -31,6 +32,11 @@ public class StationRide extends Ride {
         //default constructor
     }
 
+    @Override
+    RideType getType() {
+        return RideType.STATION;
+    }
+
     public StationRide(Vehicle vehicle, AvailableVehicleAtStation freeVehicle, ActiveSubscription activeSubscription, Clock clock) {
         super(vehicle, activeSubscription, freeVehicle.getLocation(), clock);
         this.startLockId = freeVehicle.getLockId().getValue();
@@ -42,5 +48,10 @@ public class StationRide extends Ride {
 
     Optional<LockId> getEndLockId() {
         return endLockId == null ? Optional.empty() : Optional.of(new LockId(endLockId));
+    }
+
+    void end(VehicleLockedAtStation vehicleLockedAtStation, Clock clock) {
+        super.end(vehicleLockedAtStation.getLocation(), clock);
+        this.endLockId = vehicleLockedAtStation.getLockId().getValue();
     }
 }

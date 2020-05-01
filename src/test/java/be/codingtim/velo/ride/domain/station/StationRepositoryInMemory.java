@@ -22,4 +22,15 @@ class StationRepositoryInMemory implements StationRepository {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public Station findByLockId(int lockId) {
+        return stations.stream()
+                .filter(station -> station.getLocks().stream()
+                        .map(Lock::getLockId)
+                        .map(LockId::getValue)
+                        .anyMatch(id -> lockId == id))
+                .findFirst()
+                .orElse(null);
+    }
 }

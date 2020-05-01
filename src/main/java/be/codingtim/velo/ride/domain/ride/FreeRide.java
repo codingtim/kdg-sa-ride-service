@@ -11,4 +11,9 @@ public class FreeRide extends Ride {
     FreeRide() {
         //default constructor
     }
+
+    @Override
+    RideType getType() {
+        return RideType.FREE;
+    }
 }

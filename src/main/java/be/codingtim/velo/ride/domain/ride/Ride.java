@@ -21,7 +21,7 @@ import java.time.Instant;
                 "else 'FreeRide' " +
                 "end "
 )
-public class Ride {
+public abstract class Ride {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -79,6 +79,11 @@ public class Ride {
         this.startTime = Instant.now(clock);
     }
 
+    protected void end(GpsPoint location, Clock clock) {
+        this.endPoint = location.getPoint();
+        this.endTime = Instant.now(clock);
+    }
+
     RideId getRideId() {
         return new RideId(rideId);
     }
@@ -106,4 +111,6 @@ public class Ride {
     Instant getEndTime() {
         return endTime;
     }
+
+    abstract RideType getType();
 }

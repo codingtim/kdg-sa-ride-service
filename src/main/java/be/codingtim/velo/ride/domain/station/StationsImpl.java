@@ -18,4 +18,11 @@ class StationsImpl implements Stations {
         if (station == null) throw new StationNotFound(stationId);
         return station;
     }
+
+    @Override
+    public Station get(LockId lockId) {
+        Station station = stationRepository.findByLockId(lockId.getValue());
+        if (station == null) throw new StationNotFound(lockId);
+        return station;
+    }
 }

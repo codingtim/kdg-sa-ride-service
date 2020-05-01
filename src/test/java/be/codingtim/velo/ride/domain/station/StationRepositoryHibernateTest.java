@@ -39,6 +39,19 @@ class StationRepositoryHibernateTest {
         assertNull(station);
     }
 
+    @Test
+    void findStationByLockId() {
+        Station station = stationRepository.findByLockId(2);
+        assertNotNull(station);
+        assertEquals(station.getStationId(), new StationId(1));
+    }
+
+    @Test
+    void findStationByLockIdUnknown() {
+        Station station = stationRepository.findByLockId(-1);
+        assertNull(station);
+    }
+
     @Configuration
     @Import(DatabaseConfiguration.class)
     @ComponentScan(basePackages = "be.codingtim.velo.ride.domain.station")

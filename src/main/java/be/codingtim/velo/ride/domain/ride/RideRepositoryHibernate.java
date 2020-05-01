@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 class RideRepositoryHibernate implements RideRepository {
 
@@ -21,6 +24,16 @@ class RideRepositoryHibernate implements RideRepository {
                 .createQuery("from Ride where rideId = :rideId", Ride.class)
                 .setParameter("rideId", rideId)
                 .getSingleResult();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Optional<Ride> findActiveRideByUserId(int userId) {
+        List<Ride> rides = sessionFactory.getCurrentSession()
+                .createQuery("from Ride where endTime is NULL and subscriptionId in (select subscriptionId from Subscription where userId = :userId)", Ride.class)
+                .setParameter("userId", userId)
+                .getResultList();
+        return rides.stream().findFirst();
     }
 
     @Override

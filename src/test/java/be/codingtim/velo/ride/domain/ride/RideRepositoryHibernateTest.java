@@ -59,6 +59,18 @@ class RideRepositoryHibernateTest {
         assertEquals(Instant.parse("2019-09-12T07:38:40.000Z"), freeRide.getEndTime());
     }
 
+    @Test
+    void getActiveRide() {
+        Optional<Ride> activeRideByUserId = rideRepository.findActiveRideByUserId(19534);
+        assertTrue(activeRideByUserId.isPresent());
+    }
+
+    @Test
+    void getActiveRideNotPresent() {
+        Optional<Ride> activeRideByUserId = rideRepository.findActiveRideByUserId(1118);
+        assertFalse(activeRideByUserId.isPresent());
+    }
+
     @Configuration
     @Import(DatabaseConfiguration.class)
     @ComponentScan(

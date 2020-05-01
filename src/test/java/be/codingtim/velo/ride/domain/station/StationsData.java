@@ -9,6 +9,7 @@ import static be.codingtim.velo.ride.domain.vehicle.VehicleData.*;
 public final class StationsData {
 
     public static final StationId UNKNOWN_STATION_ID = new StationId(-1);
+    public static final LockId UNKNOWN_LOCK_ID = new LockId(-1);
 
     public static final Lock EMPTY_STATION_LOCK_1 = new Lock(10, 1, 1);
     public static final Lock EMPTY_STATION_LOCK_2 = new Lock(11, 1, 2);

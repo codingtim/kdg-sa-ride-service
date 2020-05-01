@@ -78,4 +78,13 @@ public class Station {
                 .orElseThrow(IllegalStateException::new);
         freeLock.lock(vehicle);
     }
+
+    public VehicleLockedAtStation lockVehicle(Vehicle vehicle, LockId lockId) {
+        Lock toLock = locks.stream()
+                .filter(lock -> lock.getLockId().equals(lockId))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+        VehicleLockedAtLock vehicleLockedAtLock = toLock.lock(vehicle);
+        return new VehicleLockedAtStation(vehicleLockedAtLock, getLocation());
+    }
 }

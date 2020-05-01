@@ -46,7 +46,7 @@ public class Vehicle {
         return bikelot.getVehicleType();
     }
 
-    //TODO ONLY FOR TESTING, will refine once implementing
+    //grr I don't like this
     public void lockAt(LockId lockId) {
         if (this.lockId != null) throw new IllegalStateException();
         this.lockId = lockId.getValue();
