@@ -2,6 +2,7 @@ package be.codingtim.velo.ride.facade;
 
 import be.codingtim.velo.ride.domain.ride.RideId;
 import be.codingtim.velo.ride.domain.ride.StationRideService;
+import be.codingtim.velo.ride.domain.station.LockId;
 import be.codingtim.velo.ride.domain.station.StationId;
 import be.codingtim.velo.ride.domain.user.ActiveSubscription;
 import be.codingtim.velo.ride.domain.user.User;
@@ -30,5 +31,11 @@ class RideFacadeImpl implements RideFacade {
         User user = users.get(new UserId(userId));
         ActiveSubscription activeSubscription = user.getActiveSubscription(LocalDate.now(clock));
         return stationRideService.startRide(activeSubscription, new StationId(stationId), clock);
+    }
+
+    @Override
+    public void endRide(Integer userId, Integer lockId) {
+        User user = users.get(new UserId(userId));
+        stationRideService.endRide(user, new LockId(lockId), clock);
     }
 }

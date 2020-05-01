@@ -4,9 +4,12 @@ import be.codingtim.velo.ride.domain.ride.exception.NoActiveRideForUser;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyStationVehicleCanBeLockedAtStation;
 import be.codingtim.velo.ride.domain.station.*;
 import be.codingtim.velo.ride.domain.user.ActiveSubscription;
+import be.codingtim.velo.ride.domain.user.User;
 import be.codingtim.velo.ride.domain.user.UserId;
 import be.codingtim.velo.ride.domain.vehicle.Vehicle;
 import be.codingtim.velo.ride.domain.vehicle.Vehicles;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +17,8 @@ import java.time.Clock;
 
 @Service
 class RideService implements StationRideService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RideService.class);
 
     private final RideRepository rideRepository;
     private final Stations stations;
@@ -39,14 +44,20 @@ class RideService implements StationRideService {
 
     @Override
     @Transactional
-    public void endRide(UserId userId, LockId lockId, Clock clock) {
+    public void endRide(User user, LockId lockId, Clock clock) {
+        StationRide activeRide = getActiveRideOfUser(user);
+        Station station = stations.get(lockId);
+        Vehicle vehicle = vehicles.get(activeRide.getVehicleId());
+        VehicleLockedAtStation vehicleLockedAtStation = station.lockVehicle(vehicle, lockId);
+        activeRide.end(vehicleLockedAtStation, clock);
+        LOGGER.info("Ended ride {} for user {} at station {} lock {}", activeRide.getRideId(), user.getUserId(), station.getStationId(), lockId);
+    }
+
+    private StationRide getActiveRideOfUser(User user) {
+        UserId userId = user.getUserId();
         Ride activeRide = rideRepository.findActiveRideByUserId(userId.getValue())
                 .orElseThrow(() -> new NoActiveRideForUser(userId));
         if(!(activeRide.getType() == RideType.STATION)) throw new OnlyStationVehicleCanBeLockedAtStation();
-        StationRide activeStationRide = (StationRide) activeRide;
-        Station station = stations.get(lockId);
-        Vehicle vehicle = vehicles.get(activeStationRide.getVehicleId());
-        VehicleLockedAtStation vehicleLockedAtStation = station.lockVehicle(vehicle, lockId);
-        activeStationRide.end(vehicleLockedAtStation, clock);
+        return (StationRide) activeRide;
     }
 }

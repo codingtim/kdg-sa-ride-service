@@ -37,4 +37,12 @@ public class RideController {
                 .build();
     }
 
+    @RequestMapping(method = RequestMethod.POST, path = "/end", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> endStationRide(@RequestBody StationRideEndDto dto) {
+        LOGGER.info("Ending station ride for user {} at lock {}", dto.getUserId(), dto.getLockId());
+        rideFacade.endRide(dto.getUserId(), dto.getLockId());
+        LOGGER.info("Ended station ride for user {} at lock {} ", dto.getUserId(), dto.getLockId());
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }

@@ -4,4 +4,5 @@ import be.codingtim.velo.ride.domain.ride.RideId;
 
 public interface RideFacade {
     RideId startRide(Integer userId, Integer stationId);
+    void endRide(Integer userId, Integer lockId);
 }

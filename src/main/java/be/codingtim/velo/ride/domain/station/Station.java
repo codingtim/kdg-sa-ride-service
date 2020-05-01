@@ -43,7 +43,7 @@ public class Station {
         this.locks = new ArrayList<>(locks);
     }
 
-    StationId getStationId() {
+    public StationId getStationId() {
         return new StationId(stationId);
     }
 

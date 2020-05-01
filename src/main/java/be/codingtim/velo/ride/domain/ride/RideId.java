@@ -26,4 +26,9 @@ public class RideId {
     public int hashCode() {
         return Objects.hash(value);
     }
+
+    @Override
+    public String toString() {
+        return Long.toString(value);
+    }
 }

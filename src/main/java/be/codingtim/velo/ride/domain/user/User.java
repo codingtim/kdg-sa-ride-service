@@ -33,6 +33,10 @@ public class User {
         this.subscriptions = new ArrayList<>(subscriptions);
     }
 
+    public UserId getUserId() {
+        return new UserId(userId);
+    }
+
     List<Subscription> getSubscriptions() {
         return subscriptions;
     }
