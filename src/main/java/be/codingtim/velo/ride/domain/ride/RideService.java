@@ -13,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Clock;
 
 @Service
-class RideServiceImpl implements StationRideService {
+class RideService implements StationRideService {
 
     private final RideRepository rideRepository;
     private final Stations stations;
     private final Vehicles vehicles;
 
-    RideServiceImpl(RideRepository rideRepository, Stations stations, Vehicles vehicles) {
+    RideService(RideRepository rideRepository, Stations stations, Vehicles vehicles) {
         this.rideRepository = rideRepository;
         this.stations = stations;
         this.vehicles = vehicles;
