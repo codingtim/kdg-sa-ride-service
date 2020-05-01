@@ -1,6 +1,7 @@
 package be.codingtim.velo.ride.domain.ride;
 
 import be.codingtim.velo.ride.domain.ride.exception.NoActiveRideForUser;
+import be.codingtim.velo.ride.domain.ride.exception.OnlyOneActiveRideAllowed;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyStationVehicleCanBeLockedAtStation;
 import be.codingtim.velo.ride.domain.station.*;
 import be.codingtim.velo.ride.domain.user.ActiveSubscription;
@@ -33,7 +34,7 @@ class RideService implements StationRideService {
     @Override
     @Transactional
     public RideId startRide(ActiveSubscription activeSubscription, StationId stationId, Clock clock) {
-        //TODO do we need to have a business rule that there is only one active ride / user?
+        if(userHasACurrentActiveRide(activeSubscription.getUserId())) throw new OnlyOneActiveRideAllowed();
         Station station = stations.get(stationId);
         AvailableVehicleAtStation availableVehicleAtStation = station.getAvailableVehicle();
         Vehicle vehicle = vehicles.get(availableVehicleAtStation.getVehicleId());
@@ -42,10 +43,14 @@ class RideService implements StationRideService {
         return ride.getRideId();
     }
 
+    private boolean userHasACurrentActiveRide(UserId userId) {
+        return rideRepository.findActiveRideByUserId(userId.getValue()).isPresent();
+    }
+
     @Override
     @Transactional
     public CompletedStationRide endRide(User user, LockId lockId, Clock clock) {
-        StationRide activeRide = getActiveRideOfUser(user);
+        StationRide activeRide = getActiveStationRideOfUser(user);
         Station station = stations.get(lockId);
         Vehicle vehicle = vehicles.get(activeRide.getVehicleId());
         VehicleLockedAtStation vehicleLockedAtStation = station.lockVehicle(vehicle, lockId);
@@ -54,7 +59,7 @@ class RideService implements StationRideService {
         return new CompletedStationRide(user, vehicle, activeRide);
     }
 
-    private StationRide getActiveRideOfUser(User user) {
+    private StationRide getActiveStationRideOfUser(User user) {
         UserId userId = user.getUserId();
         Ride activeRide = rideRepository.findActiveRideByUserId(userId.getValue())
                 .orElseThrow(() -> new NoActiveRideForUser(userId));

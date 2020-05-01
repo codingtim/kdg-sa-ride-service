@@ -1,6 +1,7 @@
 package be.codingtim.velo.ride.web;
 
 import be.codingtim.velo.ride.domain.exception.EntityNotFound;
+import be.codingtim.velo.ride.domain.ride.exception.OnlyOneActiveRideAllowed;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyStationVehicleCanBeLockedAtStation;
 import be.codingtim.velo.ride.domain.station.exception.StationHasNoAvailableVehicle;
 import be.codingtim.velo.ride.domain.user.exception.UserHasNoActiveSubscription;
@@ -24,6 +25,11 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler
     public ResponseEntity<String> stationHasNoAvailableVehicle(StationHasNoAvailableVehicle exception) {
         return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(exception.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> onlyOneActiveRideAllowed(OnlyOneActiveRideAllowed exception) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
     }
 
     @ExceptionHandler

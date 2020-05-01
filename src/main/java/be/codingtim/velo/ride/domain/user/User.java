@@ -45,7 +45,7 @@ public class User {
         return subscriptions.stream()
                 .filter(subscription -> subscription.isValidOn(today))
                 .map(Subscription::getSubscriptionId)
-                .map(ActiveSubscription::new)
+                .map(subscriptionId -> new ActiveSubscription(getUserId(), subscriptionId))
                 .findFirst()
                 .orElseThrow(UserHasNoActiveSubscription::new);
     }

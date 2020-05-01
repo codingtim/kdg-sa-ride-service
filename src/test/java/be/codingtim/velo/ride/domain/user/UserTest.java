@@ -13,8 +13,9 @@ class UserTest {
 
     @Test
     void getActiveSubscription_whenActive_thenReturn() {
-        ActiveSubscription activeSubscription = USER_WITH_ACTIVE_SUBSCRIPTION.getActiveSubscription(LocalDate.now());
-        assertEquals(activeSubscription.getSubscriptionId(), USER_WITH_ACTIVE_SUBSCRIPTION_SUBSCRIPTION_2.getSubscriptionId());
+        User user = USER_WITH_ACTIVE_SUBSCRIPTION;
+        ActiveSubscription activeSubscription = user.getActiveSubscription(LocalDate.now());
+        assertEquals(new ActiveSubscription(user.getUserId(), USER_WITH_ACTIVE_SUBSCRIPTION_SUBSCRIPTION_2.getSubscriptionId()), activeSubscription);
     }
 
     @Test
