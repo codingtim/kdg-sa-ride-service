@@ -9,7 +9,7 @@ public class VehicleLockedAtStation {
     private final VehicleLockedAtLock vehicleLockedAtLock;
     private final GpsPoint location;
 
-    public VehicleLockedAtStation(VehicleLockedAtLock vehicleLockedAtLock, GpsPoint location) {
+    VehicleLockedAtStation(VehicleLockedAtLock vehicleLockedAtLock, GpsPoint location) {
         this.vehicleLockedAtLock = vehicleLockedAtLock;
         this.location = location;
     }

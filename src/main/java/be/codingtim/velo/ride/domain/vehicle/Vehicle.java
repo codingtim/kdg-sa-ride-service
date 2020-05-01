@@ -30,8 +30,9 @@ public class Vehicle {
         //default constuctor
     }
 
-    Vehicle(int vehicleId) {
+    Vehicle(int vehicleId, VehicleType vehicleType) {
         this.vehicleId = vehicleId;
+        this.bikelot = new Bikelot(vehicleType);
     }
 
     public VehicleId getVehicleId() {

@@ -24,6 +24,10 @@ class Bikelot {
         //default constructor
     }
 
+    Bikelot(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
     VehicleType getVehicleType() {
         return vehicleType;
     }
