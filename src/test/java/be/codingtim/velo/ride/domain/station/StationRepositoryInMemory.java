@@ -3,16 +3,16 @@ package be.codingtim.velo.ride.domain.station;
 import java.util.ArrayList;
 import java.util.List;
 
-import static be.codingtim.velo.ride.domain.station.StationsData.*;
+import static be.codingtim.velo.ride.domain.station.StationData.*;
 
 class StationRepositoryInMemory implements StationRepository {
 
     private final List<Station> stations = new ArrayList<>();
 
     public StationRepositoryInMemory() {
-        stations.add(EMPTY_STATION);
-        stations.add(HALF_FULL_STATION);
-        stations.add(FULL_STATION);
+        stations.add(new EmptyStation().station);
+        stations.add(new HalfFullStation().station);
+        stations.add(new FullStation().station);
     }
 
     @Override

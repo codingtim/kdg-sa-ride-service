@@ -2,7 +2,7 @@ package be.codingtim.velo.ride.domain.ride;
 
 import be.codingtim.velo.ride.domain.station.AvailableVehicleAtStation;
 import be.codingtim.velo.ride.domain.station.Station;
-import be.codingtim.velo.ride.domain.station.StationsData.HalfFullStation;
+import be.codingtim.velo.ride.domain.station.StationData.HalfFullStation;
 import be.codingtim.velo.ride.domain.station.VehicleLockedAtStation;
 import be.codingtim.velo.ride.domain.user.ActiveSubscription;
 import be.codingtim.velo.ride.domain.user.User;

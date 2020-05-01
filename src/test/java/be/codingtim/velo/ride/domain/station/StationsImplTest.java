@@ -3,9 +3,8 @@ package be.codingtim.velo.ride.domain.station;
 import be.codingtim.velo.ride.domain.station.exception.StationNotFound;
 import org.junit.jupiter.api.Test;
 
-import static be.codingtim.velo.ride.domain.station.StationsData.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static be.codingtim.velo.ride.domain.station.StationData.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StationsImplTest {
 
@@ -15,8 +14,8 @@ class StationsImplTest {
 
     @Test
     void getStation_whenFound_thenReturnStation() {
-        Station station = stations.get(EMPTY_STATION.getStationId());
-        assertEquals(EMPTY_STATION, station);
+        Station station = stations.get(EmptyStation.STATION_ID);
+        assertNotNull(station);
     }
 
     @Test
@@ -26,8 +25,8 @@ class StationsImplTest {
 
     @Test
     void getStationByLockId_whenFound_thenReturnStation() {
-        Station station = stations.get(EMPTY_STATION_LOCK_2.getLockId());
-        assertEquals(EMPTY_STATION, station);
+        Station station = stations.get(EmptyStation.LOCK_ID_2);
+        assertEquals(EmptyStation.STATION_ID, station.getStationId());
     }
 
     @Test
