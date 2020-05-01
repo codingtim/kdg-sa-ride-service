@@ -70,15 +70,6 @@ public class Station {
                 .collect(Collectors.toList()));
     }
 
-    //TODO ONLY FOR TESTING, will refine once implementing
-    void lock(Vehicle vehicle) {
-        Lock freeLock = locks.stream()
-                .filter(lock -> !lock.hasVehicle())
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
-        freeLock.lock(vehicle);
-    }
-
     public VehicleLockedAtStation lockVehicle(Vehicle vehicle, LockId lockId) {
         Lock toLock = locks.stream()
                 .filter(lock -> lock.getLockId().equals(lockId))

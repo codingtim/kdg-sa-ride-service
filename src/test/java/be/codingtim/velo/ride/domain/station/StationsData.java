@@ -34,9 +34,9 @@ public final class StationsData {
 
     // I do not like this but do not currently see another way
     static {
-        HALF_FULL_STATION.lock(STATION_VEHICLE_1);
-        FULL_STATION.lock(STATION_VEHICLE_2);
-        FULL_STATION.lock(STATION_VEHICLE_3);
+        HALF_FULL_STATION.lockVehicle(STATION_VEHICLE_1, HALF_FULL_STATION_LOCK_1.getLockId());
+        FULL_STATION.lockVehicle(STATION_VEHICLE_2, FULL_STATION_LOCK_1.getLockId());
+        FULL_STATION.lockVehicle(STATION_VEHICLE_3, FULL_STATION_LOCK_2.getLockId());
     }
 
     private StationsData() {
