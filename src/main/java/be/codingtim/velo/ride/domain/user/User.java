@@ -49,4 +49,12 @@ public class User {
                 .findFirst()
                 .orElseThrow(UserHasNoActiveSubscription::new);
     }
+
+    public SubscriptionType getTypeOf(SubscriptionId subscriptionId) {
+        return subscriptions.stream()
+                .filter(subscription -> subscription.getSubscriptionId().equals(subscriptionId))
+                .map(Subscription::getSubscriptionType)
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+    }
 }

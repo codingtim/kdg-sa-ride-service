@@ -11,5 +11,5 @@ public interface StationRideService {
 
     RideId startRide(ActiveSubscription activeSubscription, StationId stationId, Clock clock);
 
-    void endRide(User user, LockId lockId, Clock clock);
+    CompletedStationRide endRide(User user, LockId lockId, Clock clock);
 }

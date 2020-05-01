@@ -1,6 +1,8 @@
 package be.codingtim.velo.ride.domain.station;
 
 import be.codingtim.velo.ride.domain.location.GpsPoint;
+import be.codingtim.velo.ride.domain.vehicle.Vehicle;
+import be.codingtim.velo.ride.domain.vehicle.VehicleData;
 
 import java.util.List;
 
@@ -40,5 +42,17 @@ public final class StationsData {
 
     private StationsData() {
         //private constructor for util class
+    }
+
+    public static class HalfFullStation {
+
+        public final Lock lock1 = new Lock(20, 2, 1);
+        public final Lock lock2 = new Lock(21, 2, 2);
+        public final Station station = new Station(2, GpsPoint.of(2.0, 2.1), List.of(lock1, lock2));
+        public final Vehicle vehicle = VehicleData.stationVehicle();
+
+        public HalfFullStation() {
+            station.lockVehicle(vehicle, lock1.getLockId());
+        }
     }
 }

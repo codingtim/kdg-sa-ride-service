@@ -10,6 +10,7 @@ import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
 import java.time.Clock;
+import java.time.Duration;
 import java.time.Instant;
 
 @Entity(name = "Ride")
@@ -113,4 +114,9 @@ public abstract class Ride {
     }
 
     abstract RideType getType();
+
+    public Duration getRideDuration() {
+        if(endTime == null) throw new IllegalStateException("An active ride has no duration.");
+        return Duration.between(startTime, endTime);
+    }
 }

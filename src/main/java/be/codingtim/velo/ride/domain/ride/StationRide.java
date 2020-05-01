@@ -37,7 +37,7 @@ public class StationRide extends Ride {
         return RideType.STATION;
     }
 
-    public StationRide(Vehicle vehicle, AvailableVehicleAtStation freeVehicle, ActiveSubscription activeSubscription, Clock clock) {
+    StationRide(Vehicle vehicle, AvailableVehicleAtStation freeVehicle, ActiveSubscription activeSubscription, Clock clock) {
         super(vehicle, activeSubscription, freeVehicle.getLocation(), clock);
         this.startLockId = freeVehicle.getLockId().getValue();
     }

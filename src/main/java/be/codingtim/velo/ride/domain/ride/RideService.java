@@ -44,13 +44,14 @@ class RideService implements StationRideService {
 
     @Override
     @Transactional
-    public void endRide(User user, LockId lockId, Clock clock) {
+    public CompletedStationRide endRide(User user, LockId lockId, Clock clock) {
         StationRide activeRide = getActiveRideOfUser(user);
         Station station = stations.get(lockId);
         Vehicle vehicle = vehicles.get(activeRide.getVehicleId());
         VehicleLockedAtStation vehicleLockedAtStation = station.lockVehicle(vehicle, lockId);
         activeRide.end(vehicleLockedAtStation, clock);
         LOGGER.info("Ended ride {} for user {} at station {} lock {}", activeRide.getRideId(), user.getUserId(), station.getStationId(), lockId);
+        return new CompletedStationRide(user, vehicle, activeRide);
     }
 
     private StationRide getActiveRideOfUser(User user) {
