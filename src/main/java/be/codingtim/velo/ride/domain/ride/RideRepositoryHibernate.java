@@ -21,7 +21,7 @@ class RideRepositoryHibernate implements RideRepository {
     @Transactional(propagation = Propagation.REQUIRED)
     public Ride findById(long rideId) {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Ride where rideId = :rideId", Ride.class)
+                .createQuery("select r from Ride r where r.rideId = :rideId", Ride.class)
                 .setParameter("rideId", rideId)
                 .getSingleResult();
     }
@@ -30,7 +30,7 @@ class RideRepositoryHibernate implements RideRepository {
     @Transactional(propagation = Propagation.REQUIRED)
     public Optional<Ride> findActiveRideByUserId(int userId) {
         List<Ride> rides = sessionFactory.getCurrentSession()
-                .createQuery("from Ride where endTime is NULL and subscriptionId in (select subscriptionId from Subscription where userId = :userId)", Ride.class)
+                .createQuery("select r from Ride r where r.endTime is NULL and r.subscriptionId in (select subscriptionId from Subscription where userId = :userId)", Ride.class)
                 .setParameter("userId", userId)
                 .getResultList();
         return rides.stream().findFirst();

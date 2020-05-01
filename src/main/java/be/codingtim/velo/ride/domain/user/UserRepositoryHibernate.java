@@ -20,7 +20,7 @@ class UserRepositoryHibernate implements UserRepository {
     @Transactional(propagation = Propagation.REQUIRED)
     public User findById(int userId) {
         List<User> users = sessionFactory.getCurrentSession()
-                .createQuery("from User where userId = :userId", User.class)
+                .createQuery("select u from User u where u.userId = :userId", User.class)
                 .setParameter("userId", userId)
                 .getResultList();
         return users.isEmpty() ? null : users.get(0);
