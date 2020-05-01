@@ -22,4 +22,12 @@ public class RideRate {
             return new BillAmount((long) minutesToBill * centsPerMinute);
         }
     }
+
+    @Override
+    public String toString() {
+        return "RideRate{" +
+                "freeMinutes=" + freeMinutes +
+                ", centsPerMinute=" + centsPerMinute +
+                '}';
+    }
 }

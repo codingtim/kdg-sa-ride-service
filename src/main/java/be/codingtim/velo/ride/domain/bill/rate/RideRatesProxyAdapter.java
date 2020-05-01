@@ -5,24 +5,40 @@ import be.codingtim.velo.ride.domain.user.SubscriptionType;
 import be.codingtim.velo.ride.domain.vehicle.VehicleType;
 import be.kdg.sa.priceservice.PriceInfo;
 import be.kdg.sa.priceservice.Proxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.function.Supplier;
 
 @Component
 class RideRatesProxyAdapter implements RideRates {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RideRatesProxyAdapter.class);
 
     private final Proxy proxy = new Proxy();
 
     @Override
     public RideRate getRateFor(BillableRide billableRide) {
-        try {
-            PriceInfo priceInfo = proxy.get(typeIdOf(billableRide.getSubscriptionType()), typeIdOf(billableRide.getVehicleType()));
-            return new RideRate(priceInfo.getFreeMinutes(), priceInfo.getCentsPerMinute());
-        } catch (IOException e) {
-            //TODO error handling
-            throw new RuntimeException(e);
-        }
+        return withLogging(billableRide, () -> {
+            try {
+                PriceInfo priceInfo = proxy.get(typeIdOf(billableRide.getSubscriptionType()), typeIdOf(billableRide.getVehicleType()));
+                return new RideRate(priceInfo.getFreeMinutes(), priceInfo.getCentsPerMinute());
+            } catch (IOException e) {
+                //TODO error handling
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private RideRate withLogging(BillableRide billableRide, Supplier<RideRate> rideRatesSupplier) {
+        SubscriptionType subscriptionType = billableRide.getSubscriptionType();
+        VehicleType vehicleType = billableRide.getVehicleType();
+        LOGGER.info("Retrieving RideRate for subscription {} and vehicle {}", subscriptionType, vehicleType);
+        RideRate rideRate = rideRatesSupplier.get();
+        LOGGER.info("Retrieved RideRate for subscription {} and vehicle {} result {}", subscriptionType, vehicleType, rideRate);
+        return rideRate;
     }
 
     private int typeIdOf(VehicleType vehicleType) {
