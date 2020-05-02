@@ -1,4 +1,4 @@
-package be.codingtim.velo.ride.domain.bill;
+package be.codingtim.velo.ride.domain.bill.gateway;
 
 import be.codingtim.velo.ride.domain.user.SubscriptionType;
 import be.codingtim.velo.ride.domain.vehicle.VehicleType;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ProxyContractTest {
+class ProxyContractTest {
 
     private final Proxy proxy = new Proxy();
 
