@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BillsImplTest {
 
     private final RideRate rideRate = new RideRate(2, 10);
-    private final RideRates rideRates = billableRide -> rideRate;
+    private final RideRates rideRates = rateParameters -> rideRate;
     private final StoreBillGateway billGateway = new StoreBillGateway();
     private final Bills bills = new BillsImpl(rideRates, billGateway);
 

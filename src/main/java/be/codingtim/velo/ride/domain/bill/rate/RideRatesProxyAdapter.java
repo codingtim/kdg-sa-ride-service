@@ -1,6 +1,5 @@
 package be.codingtim.velo.ride.domain.bill.rate;
 
-import be.codingtim.velo.ride.domain.bill.BillableRide;
 import be.codingtim.velo.ride.domain.user.SubscriptionType;
 import be.codingtim.velo.ride.domain.vehicle.VehicleType;
 import be.kdg.sa.priceservice.PriceInfo;
@@ -20,21 +19,22 @@ class RideRatesProxyAdapter implements RideRates {
     private final Proxy proxy = new Proxy();
 
     @Override
-    public RideRate getRateFor(BillableRide billableRide) {
-        return withLogging(billableRide, () -> {
-            try {
-                PriceInfo priceInfo = proxy.get(typeIdOf(billableRide.getSubscriptionType()), typeIdOf(billableRide.getVehicleType()));
-                return new RideRate(priceInfo.getFreeMinutes(), priceInfo.getCentsPerMinute());
-            } catch (IOException e) {
-                //TODO error handling
-                throw new RuntimeException(e);
-            }
-        });
+    public RideRate getRateFor(RideRateParameters rideRateParameters) {
+        return withLogging(rideRateParameters, () -> getRate(rideRateParameters));
     }
 
-    private RideRate withLogging(BillableRide billableRide, Supplier<RideRate> rideRatesSupplier) {
-        SubscriptionType subscriptionType = billableRide.getSubscriptionType();
-        VehicleType vehicleType = billableRide.getVehicleType();
+    private RideRate getRate(RideRateParameters rideRateParameters) {
+        try {
+            PriceInfo priceInfo = proxy.get(typeIdOf(rideRateParameters.getSubscriptionType()), typeIdOf(rideRateParameters.getVehicleType()));
+            return new RideRate(priceInfo.getFreeMinutes(), priceInfo.getCentsPerMinute());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private RideRate withLogging(RideRateParameters rideRateParameters, Supplier<RideRate> rideRatesSupplier) {
+        SubscriptionType subscriptionType = rideRateParameters.getSubscriptionType();
+        VehicleType vehicleType = rideRateParameters.getVehicleType();
         LOGGER.info("Retrieving RideRate for subscription {} and vehicle {}", subscriptionType, vehicleType);
         RideRate rideRate = rideRatesSupplier.get();
         LOGGER.info("Retrieved RideRate for subscription {} and vehicle {} result {}", subscriptionType, vehicleType, rideRate);

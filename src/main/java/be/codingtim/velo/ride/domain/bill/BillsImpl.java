@@ -2,6 +2,7 @@ package be.codingtim.velo.ride.domain.bill;
 
 import be.codingtim.velo.ride.domain.bill.gateway.BillGateway;
 import be.codingtim.velo.ride.domain.bill.rate.RideRate;
+import be.codingtim.velo.ride.domain.bill.rate.RideRateParameters;
 import be.codingtim.velo.ride.domain.bill.rate.RideRates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ class BillsImpl implements Bills {
     @Override
     public void createBillFor(BillableRide billableRide) {
         LOGGER.info("Creating bill for user {}", billableRide.getUserId());
-        RideRate rideRate = rideRates.getRateFor(billableRide);
+        RideRate rideRate = rideRates.getRateFor(new RideRateParameters(billableRide.getSubscriptionType(), billableRide.getVehicleType()));
         Bill bill = new Bill(billableRide, rideRate);
         billGateway.handle(bill);
     }
