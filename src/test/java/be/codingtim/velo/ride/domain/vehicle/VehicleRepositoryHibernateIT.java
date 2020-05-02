@@ -21,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = VehicleRepositoryHibernateTest.TestConfiguration.class)
-class VehicleRepositoryHibernateTest {
+@ContextConfiguration(classes = VehicleRepositoryHibernateIT.TestConfiguration.class)
+class VehicleRepositoryHibernateIT {
 
     @Autowired
     private VehicleRepository vehicleRepository;

@@ -4,6 +4,8 @@
 
 In order to run `mvn clean install`:
 - external price server has to be installed with `mvn install:install-file -Dfile=price-service-1.1.jar -DgroupId=be.kdg.sa -DartifactId=price-service -Dversion=1.1 -Dpackaging=jar`
+
+In order to run with integration tests `mvn clean install -DskipITs=false`:
 - a local sql server db has to be running
 
 ## Requests

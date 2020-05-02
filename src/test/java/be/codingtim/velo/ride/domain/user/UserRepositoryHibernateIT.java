@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = UserRepositoryHibernateTest.TestConfiguration.class)
-class UserRepositoryHibernateTest {
+@ContextConfiguration(classes = UserRepositoryHibernateIT.TestConfiguration.class)
+class UserRepositoryHibernateIT {
 
     @Autowired
     private UserRepository userRepository;

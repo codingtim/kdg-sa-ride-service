@@ -16,8 +16,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = StationRepositoryHibernateTest.TestConfiguration.class)
-class StationRepositoryHibernateTest {
+@ContextConfiguration(classes = StationRepositoryHibernateIT.TestConfiguration.class)
+class StationRepositoryHibernateIT {
 
     @Autowired
     private StationRepository stationRepository;
