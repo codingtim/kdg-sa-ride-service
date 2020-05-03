@@ -6,7 +6,7 @@ public class RideId {
 
     private long value;
 
-    RideId(long value) {
+    public RideId(long value) {
         this.value = value;
     }
 

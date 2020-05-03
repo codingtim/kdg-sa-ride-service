@@ -1,15 +1,18 @@
 package be.codingtim.velo.ride.domain.ride;
 
+import be.codingtim.velo.ride.domain.openride.time.RidesActiveLongerThanQuery;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
-class RideRepositoryHibernate implements RideRepository {
+class RideRepositoryHibernate implements RideRepository, RidesActiveLongerThanQuery {
 
     private final SessionFactory sessionFactory;
 
@@ -39,5 +42,15 @@ class RideRepositoryHibernate implements RideRepository {
     @Override
     public void save(Ride ride) {
         sessionFactory.getCurrentSession().save(ride);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<RideId> findAllActiveBefore(Instant activeSince) {
+        List<Long> rideIds = sessionFactory.getCurrentSession()
+                .createQuery("select r.rideId from Ride r where r.endTime is NULL and r.startTime < :activeSince", Long.class)
+                .setParameter("activeSince", activeSince)
+                .getResultList();
+        return rideIds.stream().map(RideId::new).collect(Collectors.toList());
     }
 }

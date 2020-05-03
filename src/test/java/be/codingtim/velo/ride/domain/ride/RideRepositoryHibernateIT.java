@@ -2,6 +2,7 @@ package be.codingtim.velo.ride.domain.ride;
 
 import be.codingtim.velo.ride.database.configuration.DatabaseConfiguration;
 import be.codingtim.velo.ride.domain.location.GpsPoint;
+import be.codingtim.velo.ride.domain.openride.time.RidesActiveLongerThanQuery;
 import be.codingtim.velo.ride.domain.station.LockId;
 import be.codingtim.velo.ride.domain.user.SubscriptionId;
 import be.codingtim.velo.ride.domain.vehicle.VehicleId;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,6 +29,9 @@ class RideRepositoryHibernateIT {
 
     @Autowired
     private RideRepository rideRepository;
+
+    @Autowired
+    private RidesActiveLongerThanQuery ridesActiveLongerThanQuery;
 
     @Test
     void getStationRide() {
@@ -69,6 +75,19 @@ class RideRepositoryHibernateIT {
     void getActiveRideNotPresent() {
         Optional<Ride> activeRideByUserId = rideRepository.findActiveRideByUserId(1118);
         assertFalse(activeRideByUserId.isPresent());
+    }
+
+    @Test
+    void findAllActiveBefore() {
+        List<RideId> allActiveBefore = ridesActiveLongerThanQuery.findAllActiveBefore(Instant.now().minus(Duration.ofHours(1)));
+        assertEquals(1, allActiveBefore.size());
+        assertEquals(new RideId(5815129), allActiveBefore.get(0));
+    }
+
+    @Test
+    void findAllActiveBefore_none() {
+        List<RideId> allActiveBefore = ridesActiveLongerThanQuery.findAllActiveBefore(Instant.now().minus(Duration.ofDays(356)));
+        assertEquals(0, allActiveBefore.size());
     }
 
     @Configuration
