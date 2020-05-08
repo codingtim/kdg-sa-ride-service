@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 @Component
 class RideRatesProxyAdapter implements RideRates {
@@ -20,7 +20,7 @@ class RideRatesProxyAdapter implements RideRates {
 
     @Override
     public RideRate getRateFor(RideRateParameters rideRateParameters) {
-        return withLogging(rideRateParameters, () -> getRate(rideRateParameters));
+        return withLogging(rideRateParameters, this::getRate);
     }
 
     private RideRate getRate(RideRateParameters rideRateParameters) {
@@ -32,11 +32,11 @@ class RideRatesProxyAdapter implements RideRates {
         }
     }
 
-    private RideRate withLogging(RideRateParameters rideRateParameters, Supplier<RideRate> rideRatesSupplier) {
+    private RideRate withLogging(RideRateParameters rideRateParameters, Function<RideRateParameters, RideRate> rideRatesFunction) {
         SubscriptionType subscriptionType = rideRateParameters.getSubscriptionType();
         VehicleType vehicleType = rideRateParameters.getVehicleType();
         LOGGER.info("Retrieving RideRate for subscription {} and vehicle {}", subscriptionType, vehicleType);
-        RideRate rideRate = rideRatesSupplier.get();
+        RideRate rideRate = rideRatesFunction.apply(rideRateParameters);
         LOGGER.info("Retrieved RideRate for subscription {} and vehicle {} result {}", subscriptionType, vehicleType, rideRate);
         return rideRate;
     }
