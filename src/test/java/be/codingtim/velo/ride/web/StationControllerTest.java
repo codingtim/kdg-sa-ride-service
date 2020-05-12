@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class RideStationTest {
+class StationControllerTest {
 
     private final Stations stations = Mockito.mock(Stations.class);
     private final MockMvc mockMvc = MockMvcBuilders
