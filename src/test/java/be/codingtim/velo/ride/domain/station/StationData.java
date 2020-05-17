@@ -1,6 +1,6 @@
 package be.codingtim.velo.ride.domain.station;
 
-import be.codingtim.velo.ride.domain.location.GpsPoint;
+import be.codingtim.velo.ride.domain.point.GpsPoint;
 import be.codingtim.velo.ride.domain.vehicle.Vehicle;
 import be.codingtim.velo.ride.domain.vehicle.VehicleData;
 

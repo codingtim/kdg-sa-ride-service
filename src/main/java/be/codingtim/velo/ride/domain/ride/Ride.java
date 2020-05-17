@@ -1,6 +1,6 @@
 package be.codingtim.velo.ride.domain.ride;
 
-import be.codingtim.velo.ride.domain.location.GpsPoint;
+import be.codingtim.velo.ride.domain.point.GpsPoint;
 import be.codingtim.velo.ride.domain.user.ActiveSubscription;
 import be.codingtim.velo.ride.domain.user.SubscriptionId;
 import be.codingtim.velo.ride.domain.vehicle.Vehicle;

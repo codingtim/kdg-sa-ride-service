@@ -1,4 +1,4 @@
-package be.codingtim.velo.ride.domain.location;
+package be.codingtim.velo.ride.domain.point;
 
 import org.locationtech.jts.geom.CoordinateXY;
 import org.locationtech.jts.geom.GeometryFactory;

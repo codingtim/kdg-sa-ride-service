@@ -1,7 +1,7 @@
 package be.codingtim.velo.ride.domain.station;
 
 import be.codingtim.velo.ride.database.configuration.DatabaseConfiguration;
-import be.codingtim.velo.ride.domain.location.GpsPoint;
+import be.codingtim.velo.ride.domain.point.GpsPoint;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

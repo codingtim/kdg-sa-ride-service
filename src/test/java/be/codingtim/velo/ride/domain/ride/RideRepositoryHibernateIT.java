@@ -1,8 +1,8 @@
 package be.codingtim.velo.ride.domain.ride;
 
 import be.codingtim.velo.ride.database.configuration.DatabaseConfiguration;
-import be.codingtim.velo.ride.domain.location.GpsPoint;
 import be.codingtim.velo.ride.domain.openride.time.RidesActiveLongerThanQuery;
+import be.codingtim.velo.ride.domain.point.GpsPoint;
 import be.codingtim.velo.ride.domain.station.LockId;
 import be.codingtim.velo.ride.domain.user.SubscriptionId;
 import be.codingtim.velo.ride.domain.vehicle.VehicleId;
