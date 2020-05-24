@@ -1,5 +1,6 @@
 package be.codingtim.velo.ride.domain.vehicle;
 
+import be.codingtim.velo.ride.domain.vehicle.exception.VehicleNotFound;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +14,8 @@ class VehiclesImpl implements Vehicles {
 
     @Override
     public Vehicle get(VehicleId vehicleId) {
-        return vehicleRepository.findById(vehicleId.getValue());
+        Vehicle vehicle = vehicleRepository.findById(vehicleId.getValue());
+        if(vehicle == null) throw new VehicleNotFound(vehicleId);
+        return vehicle;
     }
 }

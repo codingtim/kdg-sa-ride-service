@@ -11,6 +11,8 @@ import be.codingtim.velo.ride.domain.station.exception.StationHasNoAvailableVehi
 import be.codingtim.velo.ride.domain.station.exception.StationNotFound;
 import be.codingtim.velo.ride.domain.user.UserId;
 import be.codingtim.velo.ride.domain.user.exception.UserHasNoActiveSubscription;
+import be.codingtim.velo.ride.domain.vehicle.VehicleId;
+import be.codingtim.velo.ride.domain.vehicle.exception.VehicleNotFound;
 import be.codingtim.velo.ride.facade.RideFacade;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -165,5 +167,61 @@ class RideControllerTest {
         private void whenEndStationRideThrow(Exception exception) {
             doThrow(exception).when(rideFacade).endStationRide(userId.getValue(), lockId.getValue());
         }
+    }
+
+
+    @Nested
+    class FreeVehicleRide {
+
+        private final UserId userId = new UserId(123);
+        private final VehicleId vehicleId = new VehicleId(214);
+        private final RideId rideId = new RideId(12345);
+
+        @Test
+        void ok() throws Exception {
+            whenStartFreeVehicleRide().thenReturn(rideId);
+            callStartFreeVehicleRide()
+                    .andExpect(status().isCreated())
+                    .andExpect(header().string(LOCATION, "/api/rides/12345"))
+            ;
+        }
+
+        @Test
+        void noSubscription() throws Exception {
+            whenStartFreeVehicleRide().thenThrow(new UserHasNoActiveSubscription());
+            callStartFreeVehicleRide()
+                    .andExpect(status().isForbidden())
+            ;
+        }
+
+        @Test
+        void hasAnotherActiveRide() throws Exception {
+            whenStartFreeVehicleRide().thenThrow(new OnlyOneActiveRideAllowed());
+            callStartFreeVehicleRide()
+                    .andExpect(status().isForbidden())
+            ;
+        }
+
+        @Test
+        void vehicleNotFound() throws Exception {
+            whenStartFreeVehicleRide().thenThrow(new VehicleNotFound(vehicleId));
+            callStartFreeVehicleRide()
+                    .andExpect(status().isNotFound())
+            ;
+        }
+
+        private ResultActions callStartFreeVehicleRide() throws Exception {
+            return mockMvc.perform(post("/api/rides/free")
+                    .contentType(APPLICATION_JSON)
+                    .content("{\n" +
+                            "  \"userId\": 123,\n" +
+                            "  \"vehicleId\": 214\n" +
+                            "}"));
+        }
+
+        private OngoingStubbing<RideId> whenStartFreeVehicleRide() {
+            return when(rideFacade.startFreeVehicleRide(userId.getValue(), vehicleId.getValue()));
+        }
+
     }
 }

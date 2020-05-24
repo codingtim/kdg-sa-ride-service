@@ -1,5 +1,7 @@
 package be.codingtim.velo.ride.domain.ride;
 
+import be.codingtim.velo.ride.domain.location.VehicleLocation;
+import be.codingtim.velo.ride.domain.point.GpsPoint;
 import be.codingtim.velo.ride.domain.ride.exception.NoActiveRideForUser;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyOneActiveRideAllowed;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyStationVehicleCanBeLockedAtStation;
@@ -8,6 +10,7 @@ import be.codingtim.velo.ride.domain.user.ActiveSubscription;
 import be.codingtim.velo.ride.domain.user.User;
 import be.codingtim.velo.ride.domain.user.UserId;
 import be.codingtim.velo.ride.domain.vehicle.Vehicle;
+import be.codingtim.velo.ride.domain.vehicle.VehicleId;
 import be.codingtim.velo.ride.domain.vehicle.Vehicles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +27,13 @@ class RideService implements StationRideService {
     private final RideRepository rideRepository;
     private final Stations stations;
     private final Vehicles vehicles;
+    private final VehicleLocation vehicleLocation;
 
-    RideService(RideRepository rideRepository, Stations stations, Vehicles vehicles) {
+    RideService(RideRepository rideRepository, Stations stations, Vehicles vehicles, VehicleLocation vehicleLocation) {
         this.rideRepository = rideRepository;
         this.stations = stations;
         this.vehicles = vehicles;
+        this.vehicleLocation = vehicleLocation;
     }
 
     @Override
@@ -65,5 +70,16 @@ class RideService implements StationRideService {
                 .orElseThrow(() -> new NoActiveRideForUser(userId));
         if(!(activeRide.getType() == RideType.STATION)) throw new OnlyStationVehicleCanBeLockedAtStation();
         return (StationRide) activeRide;
+    }
+
+    @Override
+    @Transactional
+    public RideId startRide(ActiveSubscription activeSubscription, VehicleId vehicleId, Clock clock) {
+        if(userHasACurrentActiveRide(activeSubscription.getUserId())) throw new OnlyOneActiveRideAllowed();
+        Vehicle vehicle = vehicles.get(vehicleId);
+        GpsPoint locationOfVehicle = vehicleLocation.getLocationOf(vehicle);
+        FreeRide freeRide = new FreeRide(vehicle, activeSubscription, locationOfVehicle, clock);
+        rideRepository.save(freeRide);
+        return freeRide.getRideId();
     }
 }

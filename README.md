@@ -25,3 +25,7 @@ End a station ride at a lock
 Send vehicle location
 
     curl -XPOST -H "Content-Type: application/json" -d '{"vehicleId": 4943, "xCoord": 1.0, "yCoord": 1.2}' 'http://localhost:8082/api/vehicles/location'
+
+Start a free vehicle ride
+
+    curl -XPOST -H "Content-Type: application/json" -d '{"userId": 19534, "vehicleId": 4943}' 'http://localhost:8082/api/rides/free'

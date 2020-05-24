@@ -1,6 +1,7 @@
 package be.codingtim.velo.ride.domain.location;
 
 import be.codingtim.velo.ride.domain.point.GpsPoint;
+import be.codingtim.velo.ride.domain.vehicle.Vehicle;
 import be.codingtim.velo.ride.domain.vehicle.VehicleId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ class VehicleLocationImpl implements VehicleLocation {
     }
 
     @Override
-    public GpsPoint getLocationOf(VehicleId vehicleId) {
-        return vehicleLocations.get(vehicleId);
+    public GpsPoint getLocationOf(Vehicle vehicle) {
+        return vehicleLocations.get(vehicle.getVehicleId());
     }
 }

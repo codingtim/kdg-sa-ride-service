@@ -2,6 +2,7 @@ package be.codingtim.velo.ride.facade;
 
 import be.codingtim.velo.ride.domain.bill.Bills;
 import be.codingtim.velo.ride.domain.ride.CompletedStationRide;
+import be.codingtim.velo.ride.domain.ride.RideId;
 import be.codingtim.velo.ride.domain.ride.StationRideService;
 import be.codingtim.velo.ride.domain.ride.StationRideStarted;
 import be.codingtim.velo.ride.domain.station.LockId;
@@ -10,6 +11,7 @@ import be.codingtim.velo.ride.domain.user.ActiveSubscription;
 import be.codingtim.velo.ride.domain.user.User;
 import be.codingtim.velo.ride.domain.user.UserId;
 import be.codingtim.velo.ride.domain.user.Users;
+import be.codingtim.velo.ride.domain.vehicle.VehicleId;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
@@ -42,5 +44,12 @@ class RideFacadeImpl implements RideFacade {
         User user = users.get(new UserId(userId));
         CompletedStationRide completedStationRide = stationRideService.endRide(user, new LockId(lockId), clock);
         bills.createBillFor(completedStationRide);
+    }
+
+    @Override
+    public RideId startFreeVehicleRide(Integer userId, Integer vehicleId) {
+        User user = users.get(new UserId(userId));
+        ActiveSubscription activeSubscription = user.getActiveSubscription(LocalDate.now(clock));
+        return stationRideService.startRide(activeSubscription, new VehicleId(vehicleId), clock);
     }
 }

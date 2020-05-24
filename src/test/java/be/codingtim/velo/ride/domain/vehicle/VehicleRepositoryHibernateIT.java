@@ -1,14 +1,12 @@
 package be.codingtim.velo.ride.domain.vehicle;
 
 import be.codingtim.velo.ride.database.configuration.DatabaseConfiguration;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -17,8 +15,7 @@ import java.util.Optional;
 
 import static be.codingtim.velo.ride.domain.vehicle.VehicleType.ROAMING_SCOOTER;
 import static be.codingtim.velo.ride.domain.vehicle.VehicleType.VELO_BIKE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = VehicleRepositoryHibernateIT.TestConfiguration.class)
@@ -50,7 +47,7 @@ class VehicleRepositoryHibernateIT {
     @Test
     void getUnknownVehicle() {
         int vehicleId = -1;
-        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> vehicleRepository.findById(vehicleId));
+        assertNull(vehicleRepository.findById(vehicleId));
     }
 
     @Configuration

@@ -1,7 +1,9 @@
 package be.codingtim.velo.ride.web;
 
+import be.codingtim.velo.ride.domain.ride.RideId;
 import be.codingtim.velo.ride.domain.ride.StationRideStarted;
 import be.codingtim.velo.ride.facade.RideFacade;
+import be.codingtim.velo.ride.web.dto.FreeVehicleRideDto;
 import be.codingtim.velo.ride.web.dto.StationRideDto;
 import be.codingtim.velo.ride.web.dto.StationRideEndDto;
 import be.codingtim.velo.ride.web.dto.StationRideStartedDto;
@@ -48,4 +50,14 @@ public class RideController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @RequestMapping(method = RequestMethod.POST, path = "/free", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> startFreeVehicleRide(@RequestBody FreeVehicleRideDto dto) {
+        LOGGER.info("Starting free vehicle ride for user {} with vehicle {}", dto.getUserId(), dto.getVehicleId());
+        RideId rideId = rideFacade.startFreeVehicleRide(dto.getUserId(), dto.getVehicleId());
+        long startedRideId = rideId.getValue();
+        LOGGER.info("Started free vehicle ride for user {} with vehicle {} with id {}", dto.getUserId(), dto.getVehicleId(), startedRideId);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header(HttpHeaders.LOCATION, "/api/rides/" + startedRideId)
+                .build();
+    }
 }
