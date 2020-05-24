@@ -10,4 +10,5 @@ public interface RideFacade {
 
     RideId startFreeVehicleRide(Integer userId, Integer vehicleId);
 
+    void endFreeVehicleRide(Integer userId, Integer vehicleId);
 }

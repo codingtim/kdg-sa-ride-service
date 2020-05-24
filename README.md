@@ -29,3 +29,7 @@ Send vehicle location
 Start a free vehicle ride
 
     curl -XPOST -H "Content-Type: application/json" -d '{"userId": 19534, "vehicleId": 4943}' 'http://localhost:8082/api/rides/free'
+
+End a free vehicle ride
+
+    curl -XPOST -H "Content-Type: application/json" -d '{"userId": 19534, "vehicleId": 4943}' 'http://localhost:8082/api/rides/free/end'

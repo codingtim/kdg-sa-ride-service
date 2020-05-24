@@ -60,4 +60,12 @@ public class RideController {
                 .header(HttpHeaders.LOCATION, "/api/rides/" + startedRideId)
                 .build();
     }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/free/end", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> endFreeVehicleRide(@RequestBody FreeVehicleRideDto dto) {
+        LOGGER.info("Ending free vehicle ride for user {} with vehicle {}", dto.getUserId(), dto.getVehicleId());
+        rideFacade.endFreeVehicleRide(dto.getUserId(), dto.getVehicleId());
+        LOGGER.info("Ended free vehicle ride for user {} with vehicle {}", dto.getUserId(), dto.getVehicleId());
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

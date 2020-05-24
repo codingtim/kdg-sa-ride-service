@@ -3,6 +3,7 @@ package be.codingtim.velo.ride.web;
 import be.codingtim.velo.ride.domain.ride.RideId;
 import be.codingtim.velo.ride.domain.ride.StationRideStarted;
 import be.codingtim.velo.ride.domain.ride.exception.NoActiveRideForUser;
+import be.codingtim.velo.ride.domain.ride.exception.OnlyFreeRideVehicleCanBeLockedAnywhere;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyOneActiveRideAllowed;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyStationVehicleCanBeLockedAtStation;
 import be.codingtim.velo.ride.domain.station.LockId;
@@ -169,7 +170,6 @@ class RideControllerTest {
         }
     }
 
-
     @Nested
     class FreeVehicleRide {
 
@@ -223,5 +223,61 @@ class RideControllerTest {
             return when(rideFacade.startFreeVehicleRide(userId.getValue(), vehicleId.getValue()));
         }
 
+    }
+
+    @Nested
+    class EndFreeVehicleRide {
+
+        private final UserId userId = new UserId(124);
+        private final VehicleId vehicleId = new VehicleId(214);
+
+        @Test
+        void ok() throws Exception {
+            callEndFreeVehicleRide()
+                    .andExpect(status().isOk())
+            ;
+            verifyEndFreeVehicleRide();
+        }
+
+        @Test
+        void vehicleNotFound() throws Exception {
+            whenEndFreeVehicleRideThrow(new VehicleNotFound(vehicleId));
+            callEndFreeVehicleRide()
+                    .andExpect(status().isNotFound())
+            ;
+        }
+
+        @Test
+        void onlyFreeVehiclesCanBeLockedAnywhere() throws Exception {
+            whenEndFreeVehicleRideThrow(new OnlyFreeRideVehicleCanBeLockedAnywhere());
+            callEndFreeVehicleRide()
+                    .andExpect(status().isBadRequest())
+            ;
+        }
+
+        @Test
+        void noActiveRideForUser() throws Exception {
+            whenEndFreeVehicleRideThrow(new NoActiveRideForUser(userId));
+            callEndFreeVehicleRide()
+                    .andExpect(status().isNotFound())
+            ;
+        }
+
+        private ResultActions callEndFreeVehicleRide() throws Exception {
+            return mockMvc.perform(post("/api/rides/free/end")
+                    .contentType(APPLICATION_JSON)
+                    .content("{\n" +
+                            "  \"userId\": 124,\n" +
+                            "  \"vehicleId\": 214\n" +
+                            "}"));
+        }
+
+        private void verifyEndFreeVehicleRide() {
+            verify(rideFacade).endFreeVehicleRide(userId.getValue(), vehicleId.getValue());
+        }
+
+        private void whenEndFreeVehicleRideThrow(Exception exception) {
+            doThrow(exception).when(rideFacade).endFreeVehicleRide(userId.getValue(), vehicleId.getValue());
+        }
     }
 }

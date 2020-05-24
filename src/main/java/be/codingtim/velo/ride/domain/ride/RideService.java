@@ -3,6 +3,7 @@ package be.codingtim.velo.ride.domain.ride;
 import be.codingtim.velo.ride.domain.location.VehicleLocation;
 import be.codingtim.velo.ride.domain.point.GpsPoint;
 import be.codingtim.velo.ride.domain.ride.exception.NoActiveRideForUser;
+import be.codingtim.velo.ride.domain.ride.exception.OnlyFreeRideVehicleCanBeLockedAnywhere;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyOneActiveRideAllowed;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyStationVehicleCanBeLockedAtStation;
 import be.codingtim.velo.ride.domain.station.*;
@@ -39,7 +40,7 @@ class RideService implements StationRideService {
     @Override
     @Transactional
     public StationRideStarted startRide(ActiveSubscription activeSubscription, StationId stationId, Clock clock) {
-        if(userHasACurrentActiveRide(activeSubscription.getUserId())) throw new OnlyOneActiveRideAllowed();
+        if (userHasACurrentActiveRide(activeSubscription.getUserId())) throw new OnlyOneActiveRideAllowed();
         Station station = stations.get(stationId);
         AvailableVehicleAtStation availableVehicleAtStation = station.getAvailableVehicle();
         Vehicle vehicle = vehicles.get(availableVehicleAtStation.getVehicleId());
@@ -68,18 +69,37 @@ class RideService implements StationRideService {
         UserId userId = user.getUserId();
         Ride activeRide = rideRepository.findActiveRideByUserId(userId.getValue())
                 .orElseThrow(() -> new NoActiveRideForUser(userId));
-        if(!(activeRide.getType() == RideType.STATION)) throw new OnlyStationVehicleCanBeLockedAtStation();
+        if (!(activeRide.getType() == RideType.STATION)) throw new OnlyStationVehicleCanBeLockedAtStation();
         return (StationRide) activeRide;
     }
 
     @Override
     @Transactional
     public RideId startRide(ActiveSubscription activeSubscription, VehicleId vehicleId, Clock clock) {
-        if(userHasACurrentActiveRide(activeSubscription.getUserId())) throw new OnlyOneActiveRideAllowed();
+        if (userHasACurrentActiveRide(activeSubscription.getUserId())) throw new OnlyOneActiveRideAllowed();
         Vehicle vehicle = vehicles.get(vehicleId);
         GpsPoint locationOfVehicle = vehicleLocation.getLocationOf(vehicle);
         FreeRide freeRide = new FreeRide(vehicle, activeSubscription, locationOfVehicle, clock);
         rideRepository.save(freeRide);
         return freeRide.getRideId();
+    }
+
+    @Override
+    @Transactional
+    public CompletedFreeRide endRide(User user, VehicleId vehicleId, Clock clock) {
+        FreeRide activeRide = getActiveFreeRideOfUser(user);
+        Vehicle vehicle = vehicles.get(vehicleId);
+        GpsPoint locationOfVehicle = vehicleLocation.getLocationOf(vehicle);
+        activeRide.end(locationOfVehicle, clock);
+        LOGGER.info("Ended ride {} for user {} at location {}", activeRide.getRideId(), user.getUserId(), locationOfVehicle);
+        return new CompletedFreeRide(user, vehicle, activeRide);
+    }
+
+    private FreeRide getActiveFreeRideOfUser(User user) {
+        UserId userId = user.getUserId();
+        Ride activeRide = rideRepository.findActiveRideByUserId(userId.getValue())
+                .orElseThrow(() -> new NoActiveRideForUser(userId));
+        if (activeRide.getType() != RideType.FREE) throw new OnlyFreeRideVehicleCanBeLockedAnywhere();
+        return (FreeRide) activeRide;
     }
 }

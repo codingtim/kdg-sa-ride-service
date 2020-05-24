@@ -1,6 +1,7 @@
 package be.codingtim.velo.ride.web;
 
 import be.codingtim.velo.ride.domain.exception.EntityNotFound;
+import be.codingtim.velo.ride.domain.ride.exception.OnlyFreeRideVehicleCanBeLockedAnywhere;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyOneActiveRideAllowed;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyStationVehicleCanBeLockedAtStation;
 import be.codingtim.velo.ride.domain.station.exception.StationHasNoAvailableVehicle;
@@ -39,6 +40,11 @@ public class ControllerExceptionAdvice {
 
     @ExceptionHandler
     public ResponseEntity<String> onlyStationVehicleCanBeLockedAtStation(OnlyStationVehicleCanBeLockedAtStation exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> onlyStationVehicleCanBeLockedAtStation(OnlyFreeRideVehicleCanBeLockedAnywhere exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
     }
 
