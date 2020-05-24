@@ -21,3 +21,7 @@ Get free locks of a station
 End a station ride at a lock
 
     curl -XPOST -H "Content-Type: application/json" -d '{"userId": 19534, "lockId": 2}' 'http://localhost:8082/api/rides/station/end'
+
+Send vehicle location
+
+    curl -XPOST -H "Content-Type: application/json" -d '{"vehicleId": 4943, "xCoord": 1.0, "yCoord": 1.2}' 'http://localhost:8082/api/vehicles/location'
