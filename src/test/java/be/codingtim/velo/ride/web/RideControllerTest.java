@@ -106,7 +106,7 @@ class RideControllerTest {
         }
 
         private OngoingStubbing<StationRideStarted> whenStartStationRide() {
-            return when(rideFacade.startRide(userId.getValue(), stationId.getValue()));
+            return when(rideFacade.startStationRide(userId.getValue(), stationId.getValue()));
         }
 
     }
@@ -159,11 +159,11 @@ class RideControllerTest {
         }
 
         private void verifyEndStationRide() {
-            verify(rideFacade).endRide(userId.getValue(), lockId.getValue());
+            verify(rideFacade).endStationRide(userId.getValue(), lockId.getValue());
         }
 
         private void whenEndStationRideThrow(Exception exception) {
-            doThrow(exception).when(rideFacade).endRide(userId.getValue(), lockId.getValue());
+            doThrow(exception).when(rideFacade).endStationRide(userId.getValue(), lockId.getValue());
         }
     }
 }

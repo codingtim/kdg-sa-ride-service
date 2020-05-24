@@ -31,14 +31,14 @@ class RideFacadeImpl implements RideFacade {
     }
 
     @Override
-    public StationRideStarted startRide(Integer userId, Integer stationId) {
+    public StationRideStarted startStationRide(Integer userId, Integer stationId) {
         User user = users.get(new UserId(userId));
         ActiveSubscription activeSubscription = user.getActiveSubscription(LocalDate.now(clock));
         return stationRideService.startRide(activeSubscription, new StationId(stationId), clock);
     }
 
     @Override
-    public void endRide(Integer userId, Integer lockId) {
+    public void endStationRide(Integer userId, Integer lockId) {
         User user = users.get(new UserId(userId));
         CompletedStationRide completedStationRide = stationRideService.endRide(user, new LockId(lockId), clock);
         bills.createBillFor(completedStationRide);

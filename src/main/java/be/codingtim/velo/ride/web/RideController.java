@@ -32,7 +32,7 @@ public class RideController {
     @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<StationRideStartedDto> startStationRide(@RequestBody StationRideDto dto) {
         LOGGER.info("Starting station ride for user {} from station {}", dto.getUserId(), dto.getStationId());
-        StationRideStarted stationRide = rideFacade.startRide(dto.getUserId(), dto.getStationId());
+        StationRideStarted stationRide = rideFacade.startStationRide(dto.getUserId(), dto.getStationId());
         long startedRideId = stationRide.getRideId().getValue();
         LOGGER.info("Started station ride for user {} from station {} with id {}", dto.getUserId(), dto.getStationId(), startedRideId);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -43,7 +43,7 @@ public class RideController {
     @RequestMapping(method = RequestMethod.POST, path = "/end", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> endStationRide(@RequestBody StationRideEndDto dto) {
         LOGGER.info("Ending station ride for user {} at lock {}", dto.getUserId(), dto.getLockId());
-        rideFacade.endRide(dto.getUserId(), dto.getLockId());
+        rideFacade.endStationRide(dto.getUserId(), dto.getLockId());
         LOGGER.info("Ended station ride for user {} at lock {} ", dto.getUserId(), dto.getLockId());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
