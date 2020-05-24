@@ -97,7 +97,7 @@ class RideControllerTest {
         }
 
         private ResultActions callStartStationRide() throws Exception {
-            return mockMvc.perform(post("/api/rides")
+            return mockMvc.perform(post("/api/rides/station")
                     .contentType(APPLICATION_JSON)
                     .content("{\n" +
                             "  \"userId\": 123,\n" +
@@ -150,7 +150,7 @@ class RideControllerTest {
         }
 
         private ResultActions callEndStationRide() throws Exception {
-            return mockMvc.perform(post("/api/rides/end")
+            return mockMvc.perform(post("/api/rides/station/end")
                     .contentType(APPLICATION_JSON)
                     .content("{\n" +
                             "  \"userId\": 124,\n" +

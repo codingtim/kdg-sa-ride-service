@@ -29,7 +29,7 @@ public class RideController {
         this.rideFacade = rideFacade;
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, path = "/station", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<StationRideStartedDto> startStationRide(@RequestBody StationRideDto dto) {
         LOGGER.info("Starting station ride for user {} from station {}", dto.getUserId(), dto.getStationId());
         StationRideStarted stationRide = rideFacade.startStationRide(dto.getUserId(), dto.getStationId());
@@ -40,7 +40,7 @@ public class RideController {
                 .body(new StationRideStartedDto(stationRide));
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/end", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, path = "/station/end", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> endStationRide(@RequestBody StationRideEndDto dto) {
         LOGGER.info("Ending station ride for user {} at lock {}", dto.getUserId(), dto.getLockId());
         rideFacade.endStationRide(dto.getUserId(), dto.getLockId());
