@@ -1,8 +1,9 @@
 package be.codingtim.velo.ride.facade;
 
-import be.codingtim.velo.ride.domain.ride.RideId;
+import be.codingtim.velo.ride.domain.ride.StationRideStarted;
 
 public interface RideFacade {
-    RideId startRide(Integer userId, Integer stationId);
+    StationRideStarted startRide(Integer userId, Integer stationId);
+
     void endRide(Integer userId, Integer lockId);
 }

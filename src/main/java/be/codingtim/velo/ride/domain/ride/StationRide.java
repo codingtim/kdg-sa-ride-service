@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Entity(name = "StationRide")
 @DiscriminatorValue(value = "StationRide")
-public class StationRide extends Ride {
+public class StationRide extends Ride implements StationRideStarted {
 
     @Column(
             columnDefinition = "SMALLINT",
@@ -42,7 +42,13 @@ public class StationRide extends Ride {
         this.startLockId = freeVehicle.getLockId().getValue();
     }
 
-    LockId getStartLockId() {
+    @Override
+    public RideId getRideId() {
+        return super.getRideId();
+    }
+
+    @Override
+    public LockId getStartLockId() {
         return new LockId(startLockId);
     }
 

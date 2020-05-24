@@ -1,6 +1,7 @@
 package be.codingtim.velo.ride.web;
 
 import be.codingtim.velo.ride.domain.ride.RideId;
+import be.codingtim.velo.ride.domain.ride.StationRideStarted;
 import be.codingtim.velo.ride.domain.ride.exception.NoActiveRideForUser;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyOneActiveRideAllowed;
 import be.codingtim.velo.ride.domain.ride.exception.OnlyStationVehicleCanBeLockedAtStation;
@@ -23,8 +24,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class RideControllerTest {
 
@@ -40,13 +40,26 @@ class RideControllerTest {
 
         private final UserId userId = new UserId(123);
         private final StationId stationId = new StationId(125);
+        private final LockId lockId = new LockId(214);
         private final RideId rideId = new RideId(12345);
+        private final StationRideStarted stationRideStarted = new StationRideStarted() {
+            @Override
+            public RideId getRideId() {
+                return rideId;
+            }
+
+            @Override
+            public LockId getStartLockId() {
+                return lockId;
+            }
+        };
 
         @Test
         void ok() throws Exception {
-            whenStartStationRide().thenReturn(rideId);
+            whenStartStationRide().thenReturn(stationRideStarted);
             callStartStationRide()
                     .andExpect(status().isCreated())
+                    .andExpect(jsonPath("$.lockId").value(lockId.getValue()))
                     .andExpect(header().string(LOCATION, "/api/rides/12345"))
             ;
         }
@@ -92,7 +105,7 @@ class RideControllerTest {
                             "}"));
         }
 
-        private OngoingStubbing<RideId> whenStartStationRide() {
+        private OngoingStubbing<StationRideStarted> whenStartStationRide() {
             return when(rideFacade.startRide(userId.getValue(), stationId.getValue()));
         }
 

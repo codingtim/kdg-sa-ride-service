@@ -1,18 +1,18 @@
-package be.codingtim.velo.ride.web;
+package be.codingtim.velo.ride.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class StationRideEndDto {
+public class StationRideDto {
     @JsonProperty
     private Integer userId;
     @JsonProperty
-    private Integer lockId;
+    private Integer stationId;
 
     public Integer getUserId() {
         return userId;
     }
 
-    public Integer getLockId() {
-        return lockId;
+    public Integer getStationId() {
+        return stationId;
     }
 }

@@ -9,7 +9,7 @@ import java.time.Clock;
 
 public interface StationRideService {
 
-    RideId startRide(ActiveSubscription activeSubscription, StationId stationId, Clock clock);
+    StationRideStarted startRide(ActiveSubscription activeSubscription, StationId stationId, Clock clock);
 
     CompletedStationRide endRide(User user, LockId lockId, Clock clock);
 }

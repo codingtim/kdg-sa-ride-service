@@ -33,14 +33,14 @@ class RideService implements StationRideService {
 
     @Override
     @Transactional
-    public RideId startRide(ActiveSubscription activeSubscription, StationId stationId, Clock clock) {
+    public StationRideStarted startRide(ActiveSubscription activeSubscription, StationId stationId, Clock clock) {
         if(userHasACurrentActiveRide(activeSubscription.getUserId())) throw new OnlyOneActiveRideAllowed();
         Station station = stations.get(stationId);
         AvailableVehicleAtStation availableVehicleAtStation = station.getAvailableVehicle();
         Vehicle vehicle = vehicles.get(availableVehicleAtStation.getVehicleId());
         StationRide ride = new StationRide(vehicle, availableVehicleAtStation, activeSubscription, clock);
         rideRepository.save(ride);
-        return ride.getRideId();
+        return ride;
     }
 
     private boolean userHasACurrentActiveRide(UserId userId) {
