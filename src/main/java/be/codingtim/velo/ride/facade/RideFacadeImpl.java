@@ -18,13 +18,13 @@ import java.time.LocalDate;
 class RideFacadeImpl implements RideFacade {
 
     private final Users users;
-    private final StationRideService stationRideService;
+    private final RideService rideService;
     private final Bills bills;
     private final Clock clock;
 
-    RideFacadeImpl(Users users, StationRideService stationRideService, Bills bills, Clock clock) {
+    RideFacadeImpl(Users users, RideService rideService, Bills bills, Clock clock) {
         this.users = users;
-        this.stationRideService = stationRideService;
+        this.rideService = rideService;
         this.bills = bills;
         this.clock = clock;
     }
@@ -33,13 +33,13 @@ class RideFacadeImpl implements RideFacade {
     public StationRideStarted startStationRide(Integer userId, Integer stationId) {
         User user = users.get(new UserId(userId));
         ActiveSubscription activeSubscription = user.getActiveSubscription(LocalDate.now(clock));
-        return stationRideService.startRide(activeSubscription, new StationId(stationId), clock);
+        return rideService.startRide(activeSubscription, new StationId(stationId), clock);
     }
 
     @Override
     public void endStationRide(Integer userId, Integer lockId) {
         User user = users.get(new UserId(userId));
-        CompletedStationRide completedStationRide = stationRideService.endRide(user, new LockId(lockId), clock);
+        CompletedStationRide completedStationRide = rideService.endRide(user, new LockId(lockId), clock);
         bills.createBillFor(completedStationRide);
     }
 
@@ -47,13 +47,13 @@ class RideFacadeImpl implements RideFacade {
     public RideId startFreeVehicleRide(Integer userId, Integer vehicleId) {
         User user = users.get(new UserId(userId));
         ActiveSubscription activeSubscription = user.getActiveSubscription(LocalDate.now(clock));
-        return stationRideService.startRide(activeSubscription, new VehicleId(vehicleId), clock);
+        return rideService.startRide(activeSubscription, new VehicleId(vehicleId), clock);
     }
 
     @Override
     public void endFreeVehicleRide(Integer userId, Integer vehicleId) {
         User user = users.get(new UserId(userId));
-        CompletedFreeRide completedFreeRide = stationRideService.endRide(user, new VehicleId(vehicleId), clock);
+        CompletedFreeRide completedFreeRide = rideService.endRide(user, new VehicleId(vehicleId), clock);
         bills.createBillFor(completedFreeRide);
     }
 }
