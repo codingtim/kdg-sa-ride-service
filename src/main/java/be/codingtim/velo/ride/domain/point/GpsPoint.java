@@ -48,4 +48,8 @@ public class GpsPoint {
     public String toString() {
         return point.toString();
     }
+
+    public Distance distanceTo(GpsPoint gpsPoint) {
+        return Distance.distance(this, gpsPoint);
+    }
 }
