@@ -43,14 +43,14 @@ class VehicleLocationImpl implements VehicleLocation {
     }
 
     @Override
-    public Optional<ClosestVehicle> closestVehicleTo(GpsPoint gpsPoint, VehicleType vehicleType) {
+    public Optional<NearestVehicle> nearestVehicleTo(GpsPoint gpsPoint, VehicleType vehicleType) {
         //TODO should we only search for vehicles not currently in a ride?
         return vehicleLocations.values().stream()
                 .filter(inMemoryVehicleLocation -> inMemoryVehicleLocation.vehicleType == vehicleType)
                 .map(inMemoryVehicleLocation -> inMemoryVehicleLocation.withDistanceTo(gpsPoint))
                 .min(InMemoryVehicleLocationWithDistanceTo::compareTo)
                 .map(closest -> closest.inMemoryVehicleLocation)
-                .map(closest -> new ClosestVehicle(closest.id, closest.gpsPoint));
+                .map(closest -> new NearestVehicle(closest.id, closest.gpsPoint));
     }
 
     private static final class InMemoryVehicleLocation {

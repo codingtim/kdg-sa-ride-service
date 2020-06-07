@@ -14,5 +14,5 @@ public interface VehicleLocation {
 
     GpsPoint getLocationOf(Vehicle vehicle);
 
-    Optional<ClosestVehicle> closestVehicleTo(GpsPoint gpsPoint, VehicleType vehicleType);
+    Optional<NearestVehicle> nearestVehicleTo(GpsPoint gpsPoint, VehicleType vehicleType);
 }

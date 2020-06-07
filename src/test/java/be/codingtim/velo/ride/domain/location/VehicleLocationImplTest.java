@@ -49,22 +49,22 @@ class VehicleLocationImplTest {
     }
 
     @Test
-    void getClosestVehicleOfType() {
+    void getNearestVehicleOfType() {
         GpsPoint gpsPoint = GpsPoint.of(1.2, 2.0);
         vehicleLocation.heartbeat(Instant.now(), FREE_VEHICLE_1.getVehicleId(), GpsPoint.of(1.2, 2.3));
         vehicleLocation.heartbeat(Instant.now(), FREE_VEHICLE_2.getVehicleId(), GpsPoint.of(1.2, 2.2));
         vehicleLocation.heartbeat(Instant.now(), FREE_VEHICLE_3.getVehicleId(), GpsPoint.of(1.2, 2.1));
         vehicleLocation.heartbeat(Instant.now(), FREE_VEHICLE_4.getVehicleId(), GpsPoint.of(1.2, 2.4));
-        Optional<ClosestVehicle> closestVehicle = vehicleLocation.closestVehicleTo(gpsPoint, ROAMING_E_STEP);
-        assertEquals(closestVehicle, Optional.of(new ClosestVehicle(FREE_VEHICLE_2.getVehicleId(), GpsPoint.of(1.2, 2.2))));
+        Optional<NearestVehicle> closestVehicle = vehicleLocation.nearestVehicleTo(gpsPoint, ROAMING_E_STEP);
+        assertEquals(closestVehicle, Optional.of(new NearestVehicle(FREE_VEHICLE_2.getVehicleId(), GpsPoint.of(1.2, 2.2))));
     }
 
     @Test
-    void getClosestVehicleOfType_noneFoundOfType() {
+    void getNearestVehicleOfType_noneFoundOfType() {
         GpsPoint gpsPoint = GpsPoint.of(1.2, 2.0);
         vehicleLocation.heartbeat(Instant.now(), FREE_VEHICLE_3.getVehicleId(), GpsPoint.of(1.2, 2.1));
         vehicleLocation.heartbeat(Instant.now(), FREE_VEHICLE_4.getVehicleId(), GpsPoint.of(1.2, 2.4));
-        Optional<ClosestVehicle> closestVehicle = vehicleLocation.closestVehicleTo(gpsPoint, ROAMING_E_STEP);
+        Optional<NearestVehicle> closestVehicle = vehicleLocation.nearestVehicleTo(gpsPoint, ROAMING_E_STEP);
         assertEquals(closestVehicle, Optional.empty());
     }
 }

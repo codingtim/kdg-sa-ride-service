@@ -5,11 +5,11 @@ import be.codingtim.velo.ride.domain.vehicle.VehicleId;
 
 import java.util.Objects;
 
-public class ClosestVehicle {
+public class NearestVehicle {
     private final VehicleId vehicleId;
     private final GpsPoint location;
 
-    public ClosestVehicle(VehicleId vehicleId, GpsPoint location) {
+    public NearestVehicle(VehicleId vehicleId, GpsPoint location) {
         this.vehicleId = vehicleId;
         this.location = location;
     }
@@ -26,7 +26,7 @@ public class ClosestVehicle {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ClosestVehicle that = (ClosestVehicle) o;
+        NearestVehicle that = (NearestVehicle) o;
         return Objects.equals(vehicleId, that.vehicleId) &&
                 Objects.equals(location, that.location);
     }

@@ -1,6 +1,6 @@
 package be.codingtim.velo.ride.web;
 
-import be.codingtim.velo.ride.domain.location.ClosestVehicle;
+import be.codingtim.velo.ride.domain.location.NearestVehicle;
 import be.codingtim.velo.ride.domain.location.VehicleLocation;
 import be.codingtim.velo.ride.domain.point.GpsPoint;
 import be.codingtim.velo.ride.domain.vehicle.VehicleId;
@@ -39,7 +39,7 @@ public class VehicleController {
 
     @RequestMapping(method = RequestMethod.POST, path = "/nearest", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<VehicleLocationDto> findNearest(@RequestBody NearestVehicleQueryDto dto) {
-        return vehicleLocation.closestVehicleTo(GpsPoint.of(dto.getXCoord(), dto.getYCoord()), VehicleType.valueOf(dto.getVehicleType()))
+        return vehicleLocation.nearestVehicleTo(GpsPoint.of(dto.getXCoord(), dto.getYCoord()), VehicleType.valueOf(dto.getVehicleType()))
                 .map(this::toResponse)
                 .orElseGet(this::notFound);
     }
@@ -48,11 +48,11 @@ public class VehicleController {
         return ResponseEntity.notFound().build();
     }
 
-    private ResponseEntity<VehicleLocationDto> toResponse(ClosestVehicle closestVehicle) {
+    private ResponseEntity<VehicleLocationDto> toResponse(NearestVehicle nearestVehicle) {
         return ResponseEntity.ok(new VehicleLocationDto(
-                closestVehicle.getVehicleId().getValue(),
-                closestVehicle.getLocation().getX(),
-                closestVehicle.getLocation().getY()
+                nearestVehicle.getVehicleId().getValue(),
+                nearestVehicle.getLocation().getX(),
+                nearestVehicle.getLocation().getY()
         ));
     }
 
