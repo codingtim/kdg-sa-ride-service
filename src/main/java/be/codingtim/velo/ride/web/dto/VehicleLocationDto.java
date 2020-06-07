@@ -10,6 +10,16 @@ public class VehicleLocationDto {
     @JsonProperty
     private Double yCoord;
 
+    public VehicleLocationDto() {
+        //constructor for jackson
+    }
+
+    public VehicleLocationDto(Integer vehicleId, Double xCoord, Double yCoord) {
+        this.vehicleId = vehicleId;
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
+    }
+
     public Integer getVehicleId() {
         return vehicleId;
     }

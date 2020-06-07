@@ -1,8 +1,11 @@
 package be.codingtim.velo.ride.web;
 
+import be.codingtim.velo.ride.domain.location.ClosestVehicle;
 import be.codingtim.velo.ride.domain.location.VehicleLocation;
 import be.codingtim.velo.ride.domain.point.GpsPoint;
 import be.codingtim.velo.ride.domain.vehicle.VehicleId;
+import be.codingtim.velo.ride.domain.vehicle.VehicleType;
+import be.codingtim.velo.ride.web.dto.NearestVehicleQueryDto;
 import be.codingtim.velo.ride.web.dto.VehicleLocationDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +35,25 @@ public class VehicleController {
     public ResponseEntity<Void> vehicleLocation(@RequestBody VehicleLocationDto dto) {
         vehicleLocation.heartbeat(Instant.now(clock), new VehicleId(dto.getVehicleId()), GpsPoint.of(dto.getXCoord(), dto.getYCoord()));
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/nearest", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<VehicleLocationDto> findNearest(@RequestBody NearestVehicleQueryDto dto) {
+        return vehicleLocation.closestVehicleTo(GpsPoint.of(dto.getXCoord(), dto.getYCoord()), VehicleType.valueOf(dto.getVehicleType()))
+                .map(this::toResponse)
+                .orElseGet(this::notFound);
+    }
+
+    private ResponseEntity<VehicleLocationDto> notFound() {
+        return ResponseEntity.notFound().build();
+    }
+
+    private ResponseEntity<VehicleLocationDto> toResponse(ClosestVehicle closestVehicle) {
+        return ResponseEntity.ok(new VehicleLocationDto(
+                closestVehicle.getVehicleId().getValue(),
+                closestVehicle.getLocation().getX(),
+                closestVehicle.getLocation().getY()
+        ));
     }
 
 }

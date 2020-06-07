@@ -31,6 +31,14 @@ public class GpsPoint {
         return point;
     }
 
+    public double getX() {
+        return point.getX();
+    }
+
+    public double getY() {
+        return point.getY();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

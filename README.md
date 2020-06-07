@@ -33,3 +33,7 @@ Start a free vehicle ride
 End a free vehicle ride
 
     curl -XPOST -H "Content-Type: application/json" -d '{"userId": 19534, "vehicleId": 4943}' 'http://localhost:8082/api/rides/free/end'
+
+Find nearest vehicle with type
+
+    curl -XPOST -H "Content-Type: application/json" -d '{"xCoord": 1.0, "yCoord": 1.2, "vehicleType": "ROAMING_E_STEP"}' 'http://localhost:8082/api/vehicles/nearest'
