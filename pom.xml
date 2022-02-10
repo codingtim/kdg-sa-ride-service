@@ -21,7 +21,7 @@
 
         <spring.version>5.2.3.RELEASE</spring.version>
         <mssql-jdbc.version>8.2.2.jre11</mssql-jdbc.version>
-        <hibernate.version>5.4.13.Final</hibernate.version>
+        <hibernate.version>5.4.24.Final</hibernate.version>
         <hikaricp.version>3.4.2</hikaricp.version>
 
         <jackson.version>2.10.2</jackson.version>
